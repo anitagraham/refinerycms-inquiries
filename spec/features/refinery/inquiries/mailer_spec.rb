@@ -3,9 +3,9 @@ require "capybara/email/rspec"
 
 module Refinery
   module Inquiries
-    describe "mailer", :type => :feature do
+    describe "mailer", type: :feature do
       before do
-        FactoryBot.create(:page, :link_url => Refinery::Inquiries.page_path_new)
+        FactoryBot.create(:page, link_url: Refinery::Inquiries.page_path_new)
 
         allow(ActionMailer::Base).to receive(:delivery_method).and_return(:test)
         allow(Refinery::Inquiries::Setting).to receive(:notification_recipients)
@@ -23,11 +23,10 @@ module Refinery
 
       it "sends confirmation email" do
         open_email("ugis.ozols@refinerycms.com")
-
         expect(current_email.from).to eq(["#{Refinery::Inquiries.from_name}@example.com"])
         expect(current_email.to).to eq(["ugis.ozols@refinerycms.com"])
-        expect(current_email.subject).to eq("Thank you for your inquiry")
-        expect(current_email.body).to eq("Thank you for your inquiry Ugis Ozols,\n\nThis email is a receipt to confirm we have received your inquiry and we'll be in touch shortly.\n\nThanks.")
+        expect(current_email.subject).to eq(Refinery::Inquiries::Setting.get(:inquiry_confirmation_subject_en, scoping: :inquiries))
+        expect(current_email.body).to eq(Refinery::Inquiries::Setting.get(:inquiry_confirmation_message_en, scoping: :inquiries))
       end
 
       it "sends notification email" do

@@ -1,0 +1,18 @@
+<section class="attachments">
+  <div class="note">
+    <h4>Upload files here</h4>
+    <ul>
+      <li>Maximum of three files</li>
+      <li>Files can be upto 5Mb</li>
+      <li>Files can be jpegs (photos) or PDFs (documents)</li>
+    </ul>
+  </div>
+  <div class="upload">
+    <%= f.label :attachments, class: "label" %>
+    <%= f.hidden_field :attachments, multiple: true, id: attached_files, class: [:input, :hidden] %>
+    <div id="inquiry_attachments" class="dropzone"></div>
+    <!-- This <div> elements shows a suitable message after a successful upload. -->
+    <div id="upload_messages"></div>
+
+  </div>
+</section>

@@ -4,14 +4,24 @@ module Refinery
   module Inquiries
     module Admin
 
+<<<<<<< HEAD
+      describe Inquiry, :type => :feature do
+=======
       describe Inquiry, type: :feature do
+>>>>>>> Rails6
         refinery_login
 
         let(:inquiry) do
           FactoryBot.create(:inquiry,
+<<<<<<< HEAD
+                            :name => "David Jones",
+                            :email => "dave@refinerycms.com",
+                            :message => "Hello, I really like your website. Was it hard to build and maintain or could anyone do it?")
+=======
                             name: "David Jones",
                             email: "dave@refinerycms.com",
                             message: "Hello, I really like your website. Was it hard to build and maintain or could anyone do it?")
+>>>>>>> Rails6
         end
 
         let(:delete_first_inquiry){ -> { find_link("Remove this inquiry forever", match: :first).click } }

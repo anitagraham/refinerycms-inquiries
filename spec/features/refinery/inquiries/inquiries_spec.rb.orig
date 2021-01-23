@@ -3,6 +3,18 @@ require "spec_helper"
 module Refinery
   module Inquiries
 
+<<<<<<< HEAD
+    describe "inquiries", :type => :feature do
+
+      making_an_inquiry = -> (name, email, message) {
+        ensure_on(refinery.inquiries_new_inquiry_path)
+        fill_in "Name", :with => name
+        fill_in "Email", :with => email
+        fill_in "Message", :with => message
+        click_button "Send message"
+      }
+
+=======
     describe "inquiries", type: :feature do
 
       def making_an_inquiry(name, email, message)
@@ -12,6 +24,7 @@ module Refinery
         fill_in "Message", with: message
         click_button "Send message"
       end
+>>>>>>> Rails6
 
       before do
         # load in seeds we use in migration
@@ -42,7 +55,11 @@ module Refinery
 
         it "does not save the inquiry" do
           visit refinery.inquiries_new_inquiry_path
+<<<<<<< HEAD
+          expect{ making_an_inquiry('my name 😀 ', 'jun!k@ok', '☄︎☀︎☽ ') }.not_to change(Refinery::Inquiries::Inquiry, :count)
+=======
           expect { making_an_inquiry('my name 😀 ', 'jun!k@ok', '☄︎☀︎☽ ') }.not_to change(Refinery::Inquiries::Inquiry, :count)
+>>>>>>> Rails6
           expect(page).to have_content("Email is invalid")
         end
 
@@ -111,7 +128,11 @@ module Refinery
             it "won't have an input field for phone number" do
               visit refinery.inquiries_new_inquiry_path
 
+<<<<<<< HEAD
+              expect(page).to have_no_selector("label", :text => 'Phone')
+=======
               expect(page).to have_no_selector("label", text: 'Phone')
+>>>>>>> Rails6
               expect(page).to have_no_selector("#inquiry_phone")
             end
           end
@@ -124,7 +145,11 @@ module Refinery
             it "there is an input field for phone number" do
               visit refinery.inquiries_new_inquiry_path
 
+<<<<<<< HEAD
+              expect(page).to have_selector("label", :text => 'Phone')
+=======
               expect(page).to have_selector("label", text: 'Phone')
+>>>>>>> Rails6
               expect(page).to have_selector("#inquiry_phone")
             end
           end
@@ -139,7 +164,11 @@ module Refinery
             it "won't show company" do
               visit refinery.inquiries_new_inquiry_path
 
+<<<<<<< HEAD
+              expect(page).to have_no_selector("label", :text => 'Company')
+=======
               expect(page).to have_no_selector("label", text: 'Company')
+>>>>>>> Rails6
               expect(page).to have_no_selector("#inquiry_company")
             end
           end
@@ -152,7 +181,11 @@ module Refinery
             it "shows the company" do
               visit refinery.inquiries_new_inquiry_path
 
+<<<<<<< HEAD
+              expect(page).to have_selector("label", :text => 'Company')
+=======
               expect(page).to have_selector("label", text: 'Company')
+>>>>>>> Rails6
               expect(page).to have_selector("#inquiry_company")
             end
           end

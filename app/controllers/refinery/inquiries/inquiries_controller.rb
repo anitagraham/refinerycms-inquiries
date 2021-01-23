@@ -34,6 +34,7 @@ module Refinery
 
       def find_page
         @page = Page.find_by(link_url: Refinery::Inquiries.page_path_new)
+        Rails.logger.debug @page
       end
 
       def find_thank_you_page

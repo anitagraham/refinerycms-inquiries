@@ -3,9 +3,9 @@ require "capybara/email/rspec"
 
 module Refinery
   module Inquiries
-    describe "mailer", :type => :feature do
+    describe "mailer", type: :feature do
       before do
-        FactoryBot.create(:page, :link_url => Refinery::Inquiries.page_path_new)
+        FactoryBot.create(:page, link_url: Refinery::Inquiries.page_path_new)
 
         allow(ActionMailer::Base).to receive(:delivery_method).and_return(:test)
         allow(Refinery::Inquiries::Setting).to receive(:notification_recipients)

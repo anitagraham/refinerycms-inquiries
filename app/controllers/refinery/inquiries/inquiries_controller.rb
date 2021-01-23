@@ -15,14 +15,17 @@ module Refinery
       end
 
       def create
-        @inquiry = Inquiry.new(inquiry_params)
-
+        @inquiry = Inquiry.new
+        Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__}")
         if inquiry_saved_and_validated?
+          Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__}")
+          @inquiry.attachments.attach(params[:inquiry][:attachments])
           if Refinery::Inquiries.show_flash_notice
             flash[:notice] = Refinery::Inquiries::Setting.flash_notice
           end
           redirect_to refinery.thank_you_inquiries_inquiries_path
         else
+          Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__}")
           render action: 'new'
         end
       end
@@ -44,10 +47,12 @@ module Refinery
       private
 
       def permitted_inquiry_params
-        [:name, :company, :phone, :message, :email]
+        [:name, :company, :phone, :message, :email, attachments:[]]
       end
 
       def inquiry_saved_and_validated?
+        Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__}")
+        Rails.logger.debug @inquiry.inspect
         if @inquiry.valid?
           @filter = SpamFilter.new(@inquiry, request)
           @filter.call

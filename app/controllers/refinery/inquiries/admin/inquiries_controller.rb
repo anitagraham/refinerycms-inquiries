@@ -2,6 +2,7 @@ module Refinery
   module Inquiries
     module Admin
       class InquiriesController < ::Refinery::AdminController
+        include Rails.application.routes.url_helpers
 
         crudify :'refinery/inquiries/inquiry',
                 :title_attribute => "name",

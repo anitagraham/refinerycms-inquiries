@@ -1,24 +1,27 @@
-<li class='clearfix record <%= cycle("on", "on-hover") %>'>
-  <span class='title'>
+<li class='clearfix record <%= cycle("on", "on-hover") %>' >
+  <span class='title' >
     <%= link_to inquiry.name, refinery.inquiries_admin_inquiry_path(inquiry) %> <%= t('.said') %>
-    <span class="preview"><%= truncate(strip_tags(sanitize(inquiry.message)), :length => 60) -%></span>
-  </span>
-  <span class='actions'>
+    <span class="preview" ><%= truncate(strip_tags(sanitize(inquiry.message)), :length => 60) -%></span >
+    <% if inquiry.attachments.attached? %>
+      <span class="attachments" >📎</span >
+     <% end %>
+  </span >
+  <span class='actions' >
     <%= action_icon :delete,
                     refinery.inquiries_admin_inquiry_path(inquiry),
                     t('refinery.inquiries.admin.inquiries.delete'),
                     :class => "cancel confirm-delete",
                     :data => {
-                        :confirm => t('refinery.admin.delete.message', :title => inquiry.name)
+                      :confirm => t('refinery.admin.delete.message', :title => inquiry.name)
                     },
                     :method => :delete -%>
 
-      <%= action_icon :show,
-                      refinery.inquiries_admin_inquiry_path(inquiry),
-                      t('.read_inquiry'),
-                      class: 'preview_icon' -%>
+    <%= action_icon :show,
+                    refinery.inquiries_admin_inquiry_path(inquiry),
+                    t('.read_inquiry'),
+                    class: 'preview_icon' -%>
 
-      <% if inquiry.spam? %>
+    <% if inquiry.spam? %>
       <%= action_icon :email,
                       refinery.toggle_spam_inquiries_admin_inquiry_path(inquiry),
                       t('.mark_as_spam') -%>
@@ -27,5 +30,5 @@
                       refinery.toggle_spam_inquiries_admin_inquiry_path(inquiry),
                       t('.mark_as_spam') -%>
     <% end %>
-  </span>
-</li>
+  </span >
+</li >

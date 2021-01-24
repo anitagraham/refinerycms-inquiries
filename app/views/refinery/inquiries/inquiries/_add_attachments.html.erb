@@ -1,4 +1,9 @@
-
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'refinerycms-inquiries', async: Rails.env.production?, defer: Rails.env.production? %>
+<% end %>
+<%= content_for :stylesheets do %>
+  <%= stylesheet_link_tag 'refinerycms-inquiries-frontend' %>
+<%end %>
 <section class="attachments">
   <div class="note">
     <h4>Upload files here</h4>
@@ -10,7 +15,7 @@
   </div>
   <div class="upload">
     <%= f.label :attachments, class: "label" %>
-    <%= f.file_field :attachments, multiple: true, id: :attached_files, class: [:input] %>
+    <%= f.file_field :attachments, multiple: true, id: :attached_files, class: [:input], direct_upload: true %>
     <div id="inquiry_attachments" class="dropzone"></div>
     <div id="upload_messages"></div>
 

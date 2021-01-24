@@ -24,7 +24,7 @@ module Refinery
       scope :ham, -> { where(spam: false) }
       scope :spam, -> { where(spam: true) }
 
-      has_many_attached :attachments
+      has_many_attached :attachments, dependent: :purge_later
 
       def self.latest(number = 7, include_spam = false)
         include_spam ? limit(number) : ham.limit(number)

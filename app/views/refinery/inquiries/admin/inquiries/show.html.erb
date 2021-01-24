@@ -27,7 +27,7 @@
     </li>
   </ul>
 </div>
-<div id='records'>
+<div id='records' class='inquiry'>
   <h2><%= t('.inquiry') %></h2>
   <table id='inquiry'>
     <tr>
@@ -75,12 +75,28 @@
       </td>
     </tr>
     <tr>
-      <td valign='top'>
+      <td>
         <strong><%= t('.message') %></strong>
       </td>
       <td>
         <%= simple_format strip_tags(@inquiry.message), :style => 'margin-top: 0' %>
       </td>
     </tr>
+    <% if @inquiry.attachments.attached? %>
+      <%
+        presenters = Refinery::Inquiries::AttachmentPresenter.collection(@inquiry.attachments, self)
+      %>
+      <tr>
+        <td >
+          <strong>Attachments</strong>
+        </td>
+      </tr>
+      <% presenters.each  do |att| %>
+        <tr class="attachment">
+          <td colspan="2">
+          <%= att.to_html %>
+        </td></tr>
+      <%end %>
+    <%end %>
   </table>
 </div>

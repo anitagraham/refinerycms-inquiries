@@ -15,10 +15,12 @@ module Refinery
       end
 
       def create
-        @inquiry = Inquiry.new
-        Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__}")
+        @inquiry = Inquiry.new(inquiry_params)
+
         if inquiry_saved_and_validated?
-          Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__}")
+
+          Rails.logger.debug(". . . . #{__FILE__}/#{__method__}/#{__LINE__} Attaching files")
+
           @inquiry.attachments.attach(params[:inquiry][:attachments])
           if Refinery::Inquiries.show_flash_notice
             flash[:notice] = Refinery::Inquiries::Setting.flash_notice
@@ -34,7 +36,6 @@ module Refinery
 
       def find_page
         @page = Page.find_by(link_url: Refinery::Inquiries.page_path_new)
-        Rails.logger.debug @page
       end
 
       def find_thank_you_page

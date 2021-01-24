@@ -42,14 +42,15 @@
       :placeholder => (t('message', :scope => 'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
   </div>
 
-  <% if Refinery::Inquiries.recaptcha_site_key.present? %>
-    <% content_for :javascripts do %>
-      <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js', async: Rails.env.production?, defer: Rails.env.production? %>
-    <% end %>
-  <% end %>
+  <%= render 'refinery/inquiries/inquiries/add_attachments', f:f  %>
 
   <div class="actions">
-    <div class="g-recaptcha" data-sitekey="<%= Refinery::Inquiries.recaptcha_site_key%>" > </div>
+    <% if Refinery::Inquiries.recaptcha_site_key.present? %>
+      <% content_for :javascripts do %>
+        <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js', async: Rails.env.production?, defer: Rails.env.production? %>
+      <% end %>
+      <div class="g-recaptcha" data-sitekey="<%= Refinery::Inquiries.recaptcha_site_key%>" > </div>
+    <% end %>
     <%= f.submit t('.send')  %>
     <%= link_to t('.privacy_policy'), "/privacy-policy", :id => "privacy_link" if Refinery::Inquiries.show_contact_privacy_link %>
   </div>

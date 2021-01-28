@@ -11,6 +11,8 @@ module Refinery
     config_accessor :from_name
     config_accessor :post_path, :page_path_new, :page_path_thank_you
     config_accessor :filter_spam, :recaptcha_site_key
+    config_accessor :allow_attachments
+    config_accessor :attachments_js_uploader
 
     self.show_contact_privacy_link = true
     self.show_company_field = false
@@ -24,6 +26,8 @@ module Refinery
     self.page_path_thank_you = "/contact/thank_you"
     self.filter_spam = true
     self.recaptcha_site_key = nil
+    self.allow_attachments = false
+    self.attachments_js_uploader = false
 
     def self.filter_spam
       config.filter_spam && config.recaptcha_site_key.blank?

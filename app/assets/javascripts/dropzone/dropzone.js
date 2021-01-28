@@ -1,6 +1,6 @@
-// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+// Get the template HTML and remove it from the document
 var previewNode = document.querySelector("#template");
-previewNode.id = "";
+previewNode.id = "null";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
 

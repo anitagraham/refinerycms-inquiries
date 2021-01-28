@@ -1,5 +1,14 @@
-<% Rails.logger.debug "--------- Inquiry ---------" %>
-<% Rails.logger.debug inquiry %>
+<%
+  recaptcha =    Refinery::Inquiries.recaptcha_site_key.presence
+  attachments =  Refinery::Inquiries.allow_attachments
+  show_privacy = Refinery::Inquiries.show_contact_privacy_link
+%>
+
+<% if recaptcha %>
+  <% content_for :javascripts do %>
+    <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js', async: Rails.env.production?, defer: Rails.env.production? %>
+  <% end %>
+<% end %>
 
 <%= form_for [refinery, :inquiries, inquiry] do |f| %>
   <%= render :partial => "/refinery/admin/error_messages",
@@ -42,16 +51,14 @@
       :placeholder => (t('message', :scope => 'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
   </div>
 
-  <%= render 'refinery/inquiries/inquiries/add_attachments', f:f  %>
+
+  <%= render('refinery/inquiries/inquiries/add_attachments', f:f) if attachments %>
 
   <div class="actions">
-    <% if Refinery::Inquiries.recaptcha_site_key.present? %>
-      <% content_for :javascripts do %>
-        <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js', async: Rails.env.production?, defer: Rails.env.production? %>
-      <% end %>
-      <div class="g-recaptcha" data-sitekey="<%= Refinery::Inquiries.recaptcha_site_key%>" > </div>
-    <% end %>
+    <%= tag.div class: 'g-recaptcha', data: {sitekey: recaptcha} if recaptcha %>
+
     <%= f.submit t('.send')  %>
-    <%= link_to t('.privacy_policy'), "/privacy-policy", :id => "privacy_link" if Refinery::Inquiries.show_contact_privacy_link %>
+
+    <%= link_to t('.privacy_policy'), "/privacy-policy", :id => "privacy_link" if show_privacy %>
   </div>
 <% end %>

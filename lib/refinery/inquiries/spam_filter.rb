@@ -2,6 +2,7 @@
 
 require 'httpclient'
 require 'uri'
+require 'English'
 
 module Refinery
   module Inquiries
@@ -56,7 +57,7 @@ module Refinery
       private
 
       def recaptcha?
-        Inquiries.recaptcha_site_key.present? 
+        Inquiries.recaptcha_site_key.present?
       end
 
       GOOGLE_SITEVERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'

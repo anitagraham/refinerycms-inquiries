@@ -1,3 +1,3 @@
-//= link refinery-inquiries.css
-//= link refinery-inquiries-client.css
-//= link refinery-inquiries.js
+//= link refinery/refinery-inquiries-client.css
+//= link refinery/refinery-inquiries-server.css
+//= link refinery/refinery-inquiries.js

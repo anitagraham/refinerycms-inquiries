@@ -31,7 +31,7 @@ const uppyOptions = {
 const initUppy = (selector) => {
   let uppy = new Uppy(uppyOptions)
   uppy.use(DragDrop, { target: selector })
-  uppy.use(FileInput, { pretty: true,inputName: 'attachments[]', })
+  uppy.use(FileInput, { pretty: true, inputName: 'attachments', })
   uppy.use(ProgressBar, { target: selector })
   uppy.use(StatusBar, { target: selector })
 

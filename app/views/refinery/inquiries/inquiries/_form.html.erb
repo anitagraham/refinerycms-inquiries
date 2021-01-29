@@ -51,13 +51,17 @@
       :placeholder => (t('message', :scope => 'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
   </div>
 
-
   <%= render('refinery/inquiries/inquiries/add_attachments', f:f) if attachments %>
 
   <div class="actions">
+    <%= tag.button 'Upload Attachments',
+                   class: :upload_attachments,
+                   id: :attachments_trigger,
+                   data: { target_id: 'attachments'}
+    %>
     <%= tag.div class: 'g-recaptcha', data: {sitekey: recaptcha} if recaptcha %>
 
-    <%= f.submit t('.send')  %>
+    <%= f.submit 'send'  %>
 
     <%= link_to t('.privacy_policy'), "/privacy-policy", :id => "privacy_link" if show_privacy %>
   </div>

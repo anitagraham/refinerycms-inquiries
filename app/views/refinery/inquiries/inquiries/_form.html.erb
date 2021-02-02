@@ -1,6 +1,6 @@
 <%
   recaptcha =    Refinery::Inquiries.recaptcha_site_key.presence
-  attachments =  Refinery::Inquiries.allow_attachments
+  attachments =  Refinery::Inquiries.attachments_permitted
   show_privacy = Refinery::Inquiries.show_contact_privacy_link
 %>
 
@@ -54,14 +54,10 @@
   <%= render('refinery/inquiries/inquiries/add_attachments', f:f) if attachments %>
 
   <div class="actions">
-    <%= tag.button 'Upload Attachments',
-                   class: :upload_attachments,
-                   id: :attachments_trigger,
-                   data: { target_id: 'attachments'}
-    %>
+
     <%= tag.div class: 'g-recaptcha', data: {sitekey: recaptcha} if recaptcha %>
 
-    <%= f.submit 'send'  %>
+    <%= f.submit 'Send'  %>
 
     <%= link_to t('.privacy_policy'), "/privacy-policy", :id => "privacy_link" if show_privacy %>
   </div>

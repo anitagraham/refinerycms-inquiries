@@ -89,6 +89,45 @@ module Refinery
           expect(Inquiry.latest(3).length).to eq(3)
         end
       end
+
+      describe  'attachments' do
+        let(:inquiry){FactoryBot.create(:inquiry, :with_attachments )}
+        let(:too_many){FactoryBot.create(:inquiry, :with_attachments, uploads: [UploadHelper.jpg, UploadHelper.png])}
+        let(:too_big){FactoryBot.create(:inquiry, :with_attachments, uploads: [UploadHelper.jpeg])}
+        let(:wrong_type){FactoryBot.create(:inquiry, :with_attachments, uploads: [UploadHelper.pdf])}
+
+        it 'has an attachment' do
+          expect(inquiry.attachments.attached?).to be(true)
+        end
+
+        it 'is valid with attachments' do
+          inquiry.valid?
+          expect(inquiry).to be_valid
+        end
+
+        context 'when there are too many attachments' do
+          it 'is invalid' do
+            expect(too_many).to raise_error.with_message('No more than 1 attachments permitted')
+            # expect(too_many.errors.messages[:attachments]).to eq ['No more than 1 attachments permitted']
+          end
+        end
+
+        context 'when an attachment is too big' do
+          it 'is invalid' do
+            too_big.valid?
+            expect(too_big.errors.messages[:attachments]).to eq("Attachments must be smaller than 100kb")
+          end
+        end
+
+        context 'when an attachment has an invalid file type' do
+          it 'is invalid' do
+            wrong_type.valid?
+            expect(wrong_type.errors).to eq('Attachments Attachments must be PNG, JPG, JPEG This attachment is application/pdf')
+          end
+        end
+
+      end
     end
   end
 end
+

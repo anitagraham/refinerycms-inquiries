@@ -1,27 +1,8 @@
-<% content_for :javascripts do %>
-  <%= javascript_include_tag 'refinery/refinery-inquiries',
-                             async: Rails.env.production?,
-                             defer: Rails.env.production? %>
-<% end %>
-<% content_for :stylesheets do %>
-  <%= stylesheet_link_tag 'refinery/refinery-inquiries-client' %>
-<% end %>
-
-
-<%
-   js_uploader = Refinery::Inquiries.attachments_js_uploader
-   js_upload_attributes = js_uploader && {
-       class: [:upload, :js_upload],
-       id: :js_upload,
-       data: {
-         uploader: js_uploader,
-         upload_field: 'attachments' }
-     }
-%>
-
-<section id='attachments' class="hidden" >
-  <%= tag.div js_upload_attributes do %>
-    <%= f.label :attachments, class: "label attachments" %>
-    <%= f.file_field :attachments, multiple: true, id: :attached_files, type: :file, class: :input %>
- <% end %>
+<section id='attachments' >
+    <%= f.label :attachments %>
+    <%= f.file_field :attachments,
+                     multiple: true,
+                     id: :attached_files,
+                     type: :file,
+                     direct_upload: true %>
 </section >

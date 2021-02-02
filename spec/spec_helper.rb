@@ -21,6 +21,7 @@ RSpec.configure do |config|
 
   # Should give you refinery_login
   config.extend Refinery::Testing::ControllerMacros::Authentication
+  config.include ActionDispatch::TestProcess
 end
 
 Capybara.register_driver :chrome do |app|
@@ -33,6 +34,9 @@ Capybara.register_driver :chrome do |app|
 end
 Capybara.javascript_driver = :chrome
 
+# FactoryBot::SyntaxRunner.class_eval do
+#   include ActionDispatch::TestProcess
+# end
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories including factories.

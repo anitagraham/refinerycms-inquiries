@@ -18,6 +18,7 @@ module Refinery
         @inquiry = Inquiry.new(inquiry_params)
 
         if inquiry_saved_and_validated?
+
           @inquiry.attachments.attach(params[:inquiry][:attachments])
 
           flash[:notice] = Refinery::Inquiries::Setting.flash_notice if Refinery::Inquiries.show_flash_notice

@@ -48,6 +48,7 @@ end
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
   eval File.read(local_gemfile)
 end
-gem 'image_processing'
+
 gem 'activestorage'
+gem 'active_storage_validations'
 gem 'mini_magick'

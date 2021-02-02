@@ -11,8 +11,10 @@ module Refinery
     config_accessor :from_name
     config_accessor :post_path, :page_path_new, :page_path_thank_you
     config_accessor :filter_spam, :recaptcha_site_key
-    config_accessor :allow_attachments
-    config_accessor :attachments_js_uploader
+    config_accessor :attachments_permitted
+    config_accessor :attachments_permitted_types
+    config_accessor :attachments_max_number
+    config_accessor :attachments_max_size
 
     self.show_contact_privacy_link = true
     self.show_company_field = false
@@ -26,8 +28,11 @@ module Refinery
     self.page_path_thank_you = "/contact/thank_you"
     self.filter_spam = true
     self.recaptcha_site_key = nil
-    self.allow_attachments = false
-    self.attachments_js_uploader = false
+    self.attachments_permitted = false
+    self.attachments_max_size = 3.megabytes
+    self.attachments_max_number = 3
+    # array of mime types  %w[ image/png image/jpg application/pdf]
+    self.attachments_permitted_types = %w[ image/jpg image/png]
 
     def self.filter_spam
       config.filter_spam && config.recaptcha_site_key.blank?

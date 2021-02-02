@@ -13,6 +13,7 @@ en:
         form:
           send: Send message
           privacy_policy: We value your privacy
+          add_attachments: Add Attachments
       admin:
         inquiries:
           delete: Remove this inquiry forever
@@ -82,3 +83,9 @@ en:
         email: Email
         phone: Phone
         message: Message
+        attachments: Attachments
+  errors:
+    messages:
+      content_type_invalid: "Attachments must be one of %{authorized_type} This attachment is %{content_type}"
+      limit_out_of_range: "No more than %{max} attachments permitted"
+      size_out_of_range: "Attachments must be smaller than %{max}"

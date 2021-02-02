@@ -32,6 +32,7 @@ module Refinery
         def paperclip
           "📎"
         end
+
       def info
         action_icon :info, '', attachment_information
       end

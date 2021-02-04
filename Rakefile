@@ -18,3 +18,5 @@ Refinery::Testing::Railtie.load_dummy_tasks(ENGINE_PATH)
 load File.expand_path('../tasks/rspec.rake', __FILE__)
 
 task :default => :spec
+
+load File.expand_path('../tasks/setup_extension.rake', __FILE__)

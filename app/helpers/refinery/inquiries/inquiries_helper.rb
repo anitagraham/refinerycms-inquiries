@@ -2,9 +2,9 @@ module Refinery
   module Inquiries
     module InquiriesHelper
 
-      def add_attachments(max, max_size, types)
+      def add_documents(max, max_size, types)
         #  going to ignore the validations for the moment
-        tag.section id: :attachments do
+        tag.section id: :documents do
           [header, notes(max, max_size, types), upload(max)].join(' ').html_safe
         end
       end
@@ -19,7 +19,7 @@ module Refinery
         logger.debug "Writing #{max} upload fields"
         tag.div class: :uploads do
           tag.div class: :upload do
-            label = tag.label(:attachments, class: :label)
+            label = tag.label(:documents, class: :label)
             field = tag.input(id: "upload", multiple: true, class: :input, type: :file, name: "inquiry[upload][]", direct_upload: 'true')
             [label, field].join(' ').html_safe
           end

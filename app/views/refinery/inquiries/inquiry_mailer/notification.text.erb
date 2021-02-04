@@ -10,7 +10,9 @@
 <% end %>
 <%=raw t('.email') %>: <%= @inquiry.email %>
 <%=raw t('.phone') %>: <%= @inquiry.phone %>
-<%=raw "Attachments" %>: <%= [@inquiry.attachments.map(&:filename)].join(', ').html_safe %>
+<% if @inquiry.documents.attached? %>
+  <%=raw "Documents" %>: <%= [@inquiry.documents.map(&:filename)].join(', ').html_safe %>
+<%end %>
 <%=raw t('.message') %>:
 <%=raw strip_tags(@inquiry.message) %>
 

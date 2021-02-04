@@ -2,8 +2,8 @@
   <span class='title' >
     <%= link_to inquiry.name, refinery.inquiries_admin_inquiry_path(inquiry) %> <%= t('.said') %>
     <span class="preview" ><%= truncate(strip_tags(sanitize(inquiry.message)), :length => 60) -%></span >
-    <% if inquiry.attachments.attached? %>
-      <span class="attachments" >📎</span >
+    <% if inquiry.documents.attached? %>
+      <span class="documents" >📎</span >
      <% end %>
   </span >
   <span class='actions' >

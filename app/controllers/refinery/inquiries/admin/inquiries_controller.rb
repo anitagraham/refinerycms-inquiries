@@ -16,7 +16,7 @@ module Refinery
 
         def index
           @inquiries = @inquiries.with_query(params[:search]) if searching?
-          @inquiries = @inquiries.with_attached_attachments
+          @inquiries = @inquiries.with_attached_documents
           @inquiries = @inquiries.page(params[:page])
         end
 

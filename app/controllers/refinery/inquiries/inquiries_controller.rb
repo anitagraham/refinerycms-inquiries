@@ -19,7 +19,7 @@ module Refinery
 
         if inquiry_saved_and_validated?
 
-          @inquiry.attachments.attach(params[:inquiry][:attachments])
+          @inquiry.documents.attach(params[:inquiry][:documents])
 
           flash[:notice] = Refinery::Inquiries::Setting.flash_notice if Refinery::Inquiries.show_flash_notice
           redirect_to refinery.thank_you_inquiries_inquiries_path
@@ -45,7 +45,7 @@ module Refinery
       private
 
       def permitted_inquiry_params
-        [:name, :company, :phone, :message, :email, { attachments: [] }]
+        [:name, :company, :phone, :message, :email, { documents: [] }]
       end
 
       def inquiry_saved_and_validated?

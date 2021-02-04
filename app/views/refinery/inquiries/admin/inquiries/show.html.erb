@@ -82,13 +82,13 @@
         <%= simple_format strip_tags(@inquiry.message), :style => 'margin-top: 0' %>
       </td>
     </tr>
-    <% if @inquiry.attachments.attached? %>
+    <% if @inquiry.documents.attached? %>
       <%
-        presenters = Refinery::Inquiries::AttachmentPresenter.collection(@inquiry.attachments, self)
+        presenters = Refinery::Inquiries::AttachmentPresenter.collection(@inquiry.documents, self)
       %>
       <tr>
         <td >
-          <strong>Attachments</strong>
+          <strong>Documents</strong>
         </td>
       </tr>
       <% presenters.each  do |att| %>

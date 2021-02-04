@@ -10,7 +10,7 @@ module Refinery
         fill_in "Name", with: name
         fill_in "Email", with: email
         fill_in "Message", with: message
-        click_button "Send message"
+        click_button "Send Message"
       end
 
       before do

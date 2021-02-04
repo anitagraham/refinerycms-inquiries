@@ -31,11 +31,11 @@ Refinery::Inquiries.configure do |config|
   # Toggle recaptcha support with your recaptcha "Site key"
   # config.recaptcha_site_key = <%= Refinery::Inquiries.recaptcha_site_key.inspect %>
 
-  # Support for uploading attachments with an enquiry
-  # config.attachments_permitted = <%= Refinery::Inquiries.attachments.permitted.inspect %>
-  # config.attachments_max_number = <%= Refinery::Inquiries.attachments.max_number.inspect %>
-  # config.attachments_max_size = <%= Refinery::Inquiries.attachments.max_size.inspect %>
-  #   array of mime types. %w[ image/png jpeg application/pdf]
-  # config.attachments_permitted_types = <%= Refinery::Inquiries.attachments_permitted_types %>
+  # Support for uploading documents with an enquiry
+  # config.documents_permitted = <%= Refinery::Inquiries.documents_permitted.inspect %>
+  # config.documents_max_number = <%= Refinery::Inquiries.documents_max_number.inspect %>
+  # config.documents_max_size = <%= Refinery::Inquiries.documents_max_size.inspect %>
+  # #  array of mime types. %w[ image/png jpeg application/pdf]
+  # config.documents_permitted_types = <%= Refinery::Inquiries.documents_permitted_types %>
 
 end

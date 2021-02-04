@@ -1,5 +1,4 @@
 require "factory_bot"
-require 'support/upload_helper'
 
 FactoryBot.define do
   factory :inquiry, class: "Refinery::Inquiries::Inquiry" do
@@ -7,17 +6,16 @@ FactoryBot.define do
     email { "refinery@example.com" }
     message { "Hello..." }
 
-    trait :with_attachments do
+    trait :with_documents do
       transient do
-        uploads [UploadHelper.jpg]
+        uploads { [UploadHelper.jpeg] }
       end
 
       after :build do |inquiry, evaluator|
         evaluator.uploads.each { |upload|
-          inquiry.attachments.attach(upload)
+          inquiry.documents.attach(upload)
         }
       end
     end
   end
 end
-

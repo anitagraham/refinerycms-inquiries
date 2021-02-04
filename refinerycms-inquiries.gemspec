@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency  'actionmailer',        ['>= 5.1.0', '< 7']
   s.add_dependency  'httpclient'
   s.add_dependency  'mini_magick'
+  s.add_dependency  'activestorage'
+  s.add_dependency  'active_storage_validations'
 
   s.cert_chain      = [File.expand_path("../certs/parndt.pem", __FILE__)]
   if $0 =~ /gem\z/ && ARGV.include?("build") && ARGV.include?(__FILE__)

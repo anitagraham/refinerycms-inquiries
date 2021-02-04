@@ -2,13 +2,15 @@ source 'https://rubygems.org'
 
 gemspec
 
-git "https://github.com/refinery/refinerycms", branch: "master" do
+# git "https://github.com/refinery/refinerycms", branch: "master" do
+path "../refinerycms" do
   gem "refinerycms"
 
   group :test do
     gem "refinerycms-testing"
   end
 end
+gem 'active_storage_validations'
 
 group :development do
   gem 'listen'
@@ -43,12 +45,10 @@ group :assets do
   gem "coffee-rails"
   gem "uglifier"
 end
+gem 'refinerycms-settings', git: 'https://github.com/anitagraham/refinerycms-settings', branch: 'master'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
   eval File.read(local_gemfile)
 end
 
-gem 'activestorage'
-gem 'active_storage_validations'
-gem 'mini_magick'

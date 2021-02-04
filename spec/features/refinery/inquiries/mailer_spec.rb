@@ -18,7 +18,7 @@ module Refinery
         fill_in "Name", with: "Ugis Ozols"
         fill_in "Email", with: "ugis.ozols@refinerycms.com"
         fill_in "Message", with: "Hey, I'm testing!"
-        click_button "Send message"
+        click_button "Send Message"
       end
 
       it "sends confirmation email" do

@@ -3,7 +3,8 @@ module Refinery
     source_root File.expand_path('../templates', __FILE__)
 
     def generate_inquiries_initializer
-      template 'config/initializers/refinery/inquiries.rb.erb', File.join(destination_root, 'config', 'initializers', 'refinery', 'inquiries.rb')
+      template 'config/initializers/refinery/inquiries.rb.erb',
+               File.join(destination_root, 'config', 'initializers', 'refinery', 'inquiries.rb')
     end
 
     def rake_db

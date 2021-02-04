@@ -19,8 +19,8 @@ module Refinery
         @attachment = attachment
       end
 
-      def self.collection(attachments, context)
-        attachments.map { |att| new(att, context) }
+      def self.collection(documents, context)
+        documents.map { |att| new(att, context) }
       end
 
       def to_html

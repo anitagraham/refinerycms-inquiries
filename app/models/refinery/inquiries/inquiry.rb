@@ -24,22 +24,21 @@ module Refinery
       scope :ham, -> { where(spam: false) }
       scope :spam, -> { where(spam: true) }
 
-      has_many_attached :attachments, dependent: :purge_later
-
-      validates :attachments,
-                limit: { min: 0,
-                         max: Refinery::Inquiries.attachments_max_number,
-                         message: ::I18n.t('errors.messages.limit_out_of_range', max: Refinery::Inquiries.attachments_max_number)
-                },
-                content_type: Refinery::Inquiries.attachments_permitted_types,
-                size: { less_than_or_equal_to: Refinery::Inquiries.attachments_max_size,
-                        message: ::I18n.t('errors.messages.size_out_of_range', max: Refinery::Inquiries.attachments_max_size)
-                }
-
       def self.latest(number = 7, include_spam = false)
         include_spam ? limit(number) : ham.limit(number)
       end
 
-    end
+      has_many_attached :documents, dependent: :purge_later
+
+      validates :documents,
+                limit: { min: 0,
+                         max: Refinery::Inquiries.documents_max_number,
+                         message: ::I18n.t('errors.messages.limit_out_of_range', max: Refinery::Inquiries.documents_max_number)
+                      },
+                content_type: Refinery::Inquiries.documents_permitted_types,
+                size: { less_than_or_equal_to: Refinery::Inquiries.documents_max_size,
+                        message: ::I18n.t('errors.messages.size_out_of_range', max: Refinery::Inquiries.documents_max_size)
+                      }
+      end
   end
 end

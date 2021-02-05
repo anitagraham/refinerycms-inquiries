@@ -6,14 +6,14 @@ FactoryBot.define do
     email { "refinery@example.com" }
     message { "Hello..." }
 
-    trait :with_documents do
+    trait :with_attachments do
       transient do
         uploads { [UploadHelper.jpeg] }
       end
 
       after :build do |inquiry, evaluator|
         evaluator.uploads.each { |upload|
-          inquiry.documents.attach(upload)
+          inquiry.attachments.attach(upload)
         }
       end
     end

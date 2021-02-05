@@ -26,7 +26,7 @@ module Refinery
         expect(current_email.from).to eq(["#{Refinery::Inquiries.from_name}@example.com"])
         expect(current_email.to).to eq(["ugis.ozols@refinerycms.com"])
         expect(current_email.subject).to eq(Refinery::Inquiries::Setting.get(:inquiry_confirmation_subject_en, scoping: :inquiries))
-        expect(current_email.body).to eq(Refinery::Inquiries::Setting.get(:inquiry_confirmation_message_en, scoping: :inquiries))
+        expect(current_email.body).to eq(Refinery::Inquiries::Setting.get(:inquiry_confirmation_message_en, scoping: :inquiries).gsub("%name%", 'Ugis Ozols'))
       end
 
       it "sends notification email" do

@@ -1,6 +1,6 @@
 <%
   recaptcha =    Refinery::Inquiries.recaptcha_site_key.presence
-  documents =    Refinery::Inquiries.documents_permitted
+  attachments =    Refinery::Inquiries.attachments_permitted
   show_privacy = Refinery::Inquiries.show_contact_privacy_link
 %>
 
@@ -51,7 +51,7 @@
       :placeholder => (t('message', :scope => 'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
   </div>
 
-  <%= render('refinery/inquiries/inquiries/add_documents', f:f) if documents %>
+  <%= render('refinery/inquiries/inquiries/add_attachments', f:f) if attachments %>
 
   <div class="actions">
 

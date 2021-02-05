@@ -91,35 +91,35 @@ module Refinery
         end
       end
 
-      describe  'attached documents' do
-        let(:inquiry){FactoryBot.create(:inquiry,   :with_documents )}
-        let(:too_many){FactoryBot.create(:inquiry,  :with_documents, uploads: [UploadHelper.jpeg, UploadHelper.png])}
-        let(:too_big){FactoryBot.create(:inquiry,   :with_documents, uploads: [UploadHelper.big_jpeg])}
-        let(:bad_type){FactoryBot.create(:inquiry,  :with_documents, uploads: [UploadHelper.pdf])}
+      describe  'inquiries with attachments' do
+        let(:inquiry){FactoryBot.create(:inquiry,   :with_attachments )}
+        let(:too_many){FactoryBot.create(:inquiry,  :with_attachments, uploads: [UploadHelper.jpeg, UploadHelper.png])}
+        let(:too_big){FactoryBot.create(:inquiry,   :with_attachments, uploads: [UploadHelper.big_jpeg])}
+        let(:bad_type){FactoryBot.create(:inquiry,  :with_attachments, uploads: [UploadHelper.pdf])}
 
-        it 'has an attached document' do
-          expect(inquiry.documents.attached?).to be true
+        it 'has an attachment' do
+          expect(inquiry.attachments.attached?).to be true
         end
 
-        it 'is valid with an attached document' do
+        it 'is valid with an attachment' do
           expect(inquiry.valid?).to be true
         end
 
-        context 'when there are too many documents' do
+        context 'when there are too many attachments' do
           it 'is invalid' do
-            expect { too_many.valid? }.to raise_error.with_message(%r(Documents No more than \d documents permitted))
+            expect { too_many.valid? }.to raise_error(ActiveRecord::RecordInvalid, /Validation failed: Attachments No more than 1 documents permitted/)
           end
         end
 
-        context 'when a document is too big' do
+        context 'when a attachment is too big' do
           it 'is invalid' do
-            expect { too_big.valid? }.to raise_error.with_message(%r(Documents Must be smaller than 100 KB))
+            expect { too_big.valid? }.to raise_error(ActiveRecord::RecordInvalid, /Must be smaller than 100 KB/)
           end
         end
 
-        context 'when a document has an invalid file type' do
+        context 'when a attachment has an invalid file type' do
           it 'is invalid' do
-            expect { bad_type.valid? }.to raise_error.with_message(%r(Documents Must be one of JPEG, PNG. This document is application/pdf))
+            expect { bad_type.valid? }.to raise_error(ActiveRecord::RecordInvalid, /Validation failed: Attachments Must be one of JPEG, PNG/)
           end
         end
 

@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-# git "https://github.com/refinery/refinerycms", branch: "master" do
-path "../refinerycms" do
+git "https://github.com/refinery/refinerycms", branch: "master" do
   gem "refinerycms"
 
   group :test do
@@ -20,6 +19,7 @@ end
 group :test do
   gem 'capybara-email', '~> 3.0'
   gem 'selenium-webdriver', require: false
+  gem 'webdrivers'
   gem 'puma'
 end
 
@@ -46,7 +46,7 @@ group :assets do
   gem "coffee-rails"
   gem "uglifier"
 end
-gem 'refinerycms-settings', git: 'https://github.com/anitagraham/refinerycms-settings', branch: 'master'
+gem 'refinerycms-settings', git: 'https://github.com/refinery/refinerycms-settings', branch: 'master'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)

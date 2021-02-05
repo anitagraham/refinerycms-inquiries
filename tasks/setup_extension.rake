@@ -6,7 +6,7 @@
 #     end
 #   end
 # end
-
+# Rake::Task['refinery:testing:setup_extension'].clear
 namespace :refinery do
   namespace :testing do
 
@@ -59,10 +59,10 @@ namespace :refinery do
     file 'config/initializers/refinery/inquiries.rb': [ 'prep', tmpfile ] do |file|
       test_settings = <<-SETTINGS
     # config values for testing
-    config.documents_permitted = true
-    config.documents_max_size = 100.kilobytes
-    config.documents_max_number = 1
-    config.documents_permitted_types = [ 'image/jpeg', 'image/png']
+    config.attachments_permitted = true
+    config.attachments_max_size = 100.kilobytes
+    config.attachments_max_number = 1
+    config.attachments_permitted_types = [ 'image/jpeg', 'image/png']
       SETTINGS
       insert_before_end(file.name, test_settings)
     end

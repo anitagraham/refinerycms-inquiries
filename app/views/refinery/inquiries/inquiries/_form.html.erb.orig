@@ -41,7 +41,7 @@
     <%= f.text_area :message, :rows => 8, :required => 'required',
                     :placeholder => (t('message', :scope => 'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
   </div >
-  <%= render partial: 'add_documents', locals: { f: f } %>
+  <%= render partial: 'add_attachments', locals: { f: f } %>
 
 
   <% if Refinery::Inquiries.recaptcha_site_key.present? %>

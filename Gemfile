@@ -14,6 +14,7 @@ gem 'active_storage_validations'
 
 group :development do
   gem 'listen'
+  gem 'i18n-tasks'
 end
 
 group :test do

@@ -13,7 +13,12 @@ en:
         form:
           send: Send message
           privacy_policy: We value your privacy
+        add_documents:
           add_documents: Add Documents
+          document_max_size: Uploads must be smaller than %{quantity}
+          document_types: Uploads can only be files with these types %{types}
+          many_documents: You may upload up to %{quantity} documents
+          one_document: You may only upload 1 document
       admin:
         inquiries:
           delete: Remove this inquiry forever
@@ -45,6 +50,9 @@ en:
             phone: Phone
             date: Date
             message: Message
+        attachment_presenter:
+          download:
+            download: Download
         settings:
           notification_recipients_form:
             inquiry_settings_value_name: Send notifications to
@@ -84,6 +92,7 @@ en:
         phone: Phone
         message: Message
         documents: Documents
+        click_to_email: Click to send email
   errors:
     messages:
       content_type_invalid: "Must be one of %{authorized_types}. This document is %{content_type}"

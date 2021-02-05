@@ -4,6 +4,7 @@ require 'filters_spam'
 module Refinery
   module Inquiries
     class Inquiry < Refinery::Core::BaseModel
+      include ActionView::Helpers::NumberHelper
 
       if Inquiries.filter_spam
         filters_spam message_field:    :message,
@@ -37,8 +38,9 @@ module Refinery
                       },
                 content_type: Refinery::Inquiries.documents_permitted_types,
                 size: { less_than_or_equal_to: Refinery::Inquiries.documents_max_size,
-                        message: ::I18n.t('errors.messages.size_out_of_range', max: Refinery::Inquiries.documents_max_size)
+                        message: ::I18n.t('errors.messages.size_out_of_range',
+                                          max: Refinery::Inquiries.document_max_size_human)
                       }
-      end
+    end
   end
 end

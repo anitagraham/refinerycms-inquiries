@@ -84,7 +84,7 @@
     </tr>
     <% if @inquiry.documents.attached? %>
       <%
-        presenters = Refinery::Inquiries::AttachmentPresenter.collection(@inquiry.documents, self)
+        presenters = Refinery::Inquiries::Admin::AttachmentPresenter.collection(@inquiry.documents, self)
       %>
       <tr>
         <td >

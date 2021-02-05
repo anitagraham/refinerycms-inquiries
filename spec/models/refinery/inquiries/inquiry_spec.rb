@@ -107,15 +107,13 @@ module Refinery
 
         context 'when there are too many documents' do
           it 'is invalid' do
-            allow(Refinery::Inquiries).to receive(:documents_max_number).and_return(1)
             expect { too_many.valid? }.to raise_error.with_message(%r(Documents No more than \d documents permitted))
           end
         end
 
         context 'when a document is too big' do
           it 'is invalid' do
-            allow(Refinery::Inquiries).to receive(:documents_max_size).and_return(100.kilobytes)
-            expect { too_big.valid? }.to raise_error.with_message(%r(Documents Must be smaller than 102400))
+            expect { too_big.valid? }.to raise_error.with_message(%r(Documents Must be smaller than 100 KB))
           end
         end
 

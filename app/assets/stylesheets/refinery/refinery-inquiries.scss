@@ -1,0 +1,31 @@
+.inquiries {
+  form {
+    padding-top: 12px;
+    label {
+      width: 150px;
+      float: left;
+      &.required:after {
+        content:" *"
+      }
+    }
+    input {
+      width: 200px;
+    }
+    .field {
+      margin: 12px 0px;
+    }
+    .actions {
+      margin-left: 150px;
+      input {
+        width: auto;
+      }
+    }
+  }
+}
+table#inquiry {
+  tr.attachment td {
+    position: relative;
+    span.actions {position: absolute}
+  }
+
+}

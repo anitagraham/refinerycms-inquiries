@@ -7,6 +7,7 @@ require 'English'
 module Refinery
   module Inquiries
     class SpamFilter
+
       def initialize(inquiry, request)
         @inquiry = inquiry
         @request = request
@@ -88,7 +89,7 @@ module Refinery
       end
 
       def send_confirmation_email!
-        if Setting.send_confirmation?
+        if Refinery::Inquiries::Setting.send_confirmation?
           begin
             InquiryMailer.confirmation(@inquiry, @request).deliver_now
           rescue StandardError

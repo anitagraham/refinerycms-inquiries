@@ -13,12 +13,14 @@ en:
         form:
           send: Send message
           privacy_policy: We value your privacy
-        add_documents:
-          add_documents: Add Documents
-          document_max_size: Uploads must be smaller than %{quantity}
-          document_types: Uploads can only be files with these types %{types}
-          many_documents: You may upload up to %{quantity} documents
-          one_document: You may only upload 1 document
+        add_attachments:
+          add_attachments: Add Attachments
+      conditions:
+        html:
+          attachment_max_size: Each file must be smaller than <em>%{quantity}</em>
+          attachment_types: You may only upload files with these types <em>%{types}</em>
+          many_attachments: You may upload up to <em>%{quantity}</em> attachments
+          one_attachmen: You may only upload <em>1</em> attachment
       admin:
         inquiries:
           delete: Remove this inquiry forever
@@ -50,6 +52,7 @@ en:
             phone: Phone
             date: Date
             message: Message
+            attachments: Attachments
         attachment_presenter:
           download:
             download: Download
@@ -80,6 +83,7 @@ en:
           phone: Phone
           message: Message
           closing_line: Kind Regards
+          attachments: Attachments
           ps: P.S. All your inquiries are stored in the "Inquiries" section of Refinery should you ever want to view it later there.
   activerecord:
     models:

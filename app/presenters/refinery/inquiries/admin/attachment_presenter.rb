@@ -25,7 +25,7 @@ module Refinery
         end
 
         def to_html
-          [paperclip, attachment.filename.base, *actions].join(' ').html_safe
+          [paperclip, name_and_preview, *actions].join(' ').html_safe
         end
 
         private
@@ -33,7 +33,15 @@ module Refinery
           def paperclip
             "📎"
           end
+          def name_and_preview
+            attachment.filename.base
+            # , href: variant(resize_to_limit: [100, 100]), class: :image
+          end
 
+          def preview_image
+            return unless variable?
+            variant(resize_to_limit: [100, 100])
+          end
           def info
             action_icon :info, '', attachment_information
           end
@@ -48,12 +56,13 @@ module Refinery
 
           def actions
             tag.span class: :actions do
-              [info, download].join(' ').html_safe
+              [ info, download].join(' ').html_safe
             end
           end
 
           def download
-            action_icon(:download, context.rails_blob_path(attachment, disposition: "attachment"), t('.download'))
+            Rails.logger.debug "Attachment URL: #{context.rails_blob_url(attachment)}"
+            action_icon(:download, context.rails_blob_url(attachment, disposition: "attachment"), 'Download')
           end
 
       end

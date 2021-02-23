@@ -1,21 +1,22 @@
-<% attachment_types =  Refinery::Inquiries::attachment_types_human %>
-<section id='attachments' >
-  <div class="note">
-    <h4>Uploading attachments</h4>
-    <ul class='conditions'>
-      <%if Refinery::Inquiries.attachments_max_number == 1 %>
-        <li><%= t('.one_attachment')%></li>
-      <% else %>
-        <li><%= t('.many_attachments', quantity: Refinery::Inquiries.attachments_max_number) %></li>
-      <% end %>
-      <li><%= t('.attachment_max_size', quantity: Refinery::Inquiries.attachment_max_size_human) %></li>
-      <li><%= t('.attachment_types', types: attachment_types) %></li>
-    </ul>
-  </div>
-    <%= f.label :attachments %>
-    <%= f.file_field :attachments,
-                     multiple: true,
-                     id: :attached_files,
-                     type: :file,
-                     direct_upload: true %>
-</section >
+<% content_for :meta do %>
+
+  <%= tag.meta name: "direct-upload-url", content: Rails.application.routes.url_helpers.rails_direct_uploads_path %>
+  <%= tag.meta name: "inquiry-condition-max-files", content: Refinery::Inquiries.attachments_max_number %>
+  <%= tag.meta name: "inquiry-condition-max-size", content: Refinery::Inquiries.attachments_max_size %>
+  <%= tag.meta name: "inquiry-condition-permitted-types", content: Refinery::Inquiries.attachments_permitted_types %>
+
+<% end %>
+<div class='attachments' >
+  <div class="conditions" >
+    <h5 >Uploading documents</h5 >
+    <%= attachment_conditions_list %>
+
+  </div >
+
+  <button id='upload_trigger' class="button" ><%= t('.add_attachments') %></button >
+  <div id='uppy' data-field-name="inquiry[attachments][]" ></div >
+  <div id="successful_uploads" ></div >
+  <div id="failed_uploads" ></div >
+
+</div >
+

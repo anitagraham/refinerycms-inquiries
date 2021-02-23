@@ -1,6 +1,7 @@
 module Refinery
   module Inquiries
     class InquiryMailer < ActionMailer::Base
+      include Rails.application.routes.url_helpers
 
       def confirmation(inquiry, request)
         @inquiry, @request = inquiry, request
@@ -33,6 +34,12 @@ module Refinery
 
       def from_mail
         "#{Refinery::Inquiries.from_name}@#{@request.domain}"
+      end
+
+      def attached_files(attached)
+        attached.each do |att|
+          attachments[att.blob.filename] = att.download
+        end
       end
     end
   end

@@ -1,4 +1,5 @@
 require 'refinery/core/base_model'
+require 'active_storage_validations'
 require 'filters_spam'
 
 module Refinery

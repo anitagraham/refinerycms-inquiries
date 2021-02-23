@@ -24,7 +24,6 @@ module Refinery
 
         def find_setting
           setting = params[:id].gsub("inquiry_", "")
-
           if Refinery::Inquiries::Setting.respond_to?(setting)
             Refinery::Inquiries::Setting.send(setting)
           end

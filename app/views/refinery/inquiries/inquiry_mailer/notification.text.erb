@@ -11,7 +11,10 @@
 <%=raw t('.email') %>: <%= @inquiry.email %>
 <%=raw t('.phone') %>: <%= @inquiry.phone %>
 <% if @inquiry.attachments.attached? %>
-  <%=raw "attachments" %>: <%= [@inquiry.attachments.map(&:filename)].join(', ').html_safe %>
+  <%=raw "Attachments:" %>
+  <% @inquiry.attachments.each do |att| %>
+    <%= att.blob.filename %>
+  <% end %>
 <%end %>
 <%=raw t('.message') %>:
 <%=raw strip_tags(@inquiry.message) %>

@@ -1,0 +1,7 @@
+@import "~Settings/stylesheets/_colours";
+@import "~Settings/stylesheets/mixins/_upload_mixins";
+
+#successful_uploads { @include upload_list($keyColor: $csGreen)  }
+#failed_uploads    { @include upload_list($keyColor: $csRed)  }
+
+

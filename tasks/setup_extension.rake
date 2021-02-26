@@ -1,12 +1,3 @@
-# namespace :refinery do
-#   namespace :testing do
-#     task :setup_extension do
-#       require 'refinerycms-my-extension'
-#       Refinery::MyEngineGenerator.start %w[--quiet]
-#     end
-#   end
-# end
-# Rake::Task['refinery:testing:setup_extension'].clear
 namespace :refinery do
   namespace :testing do
 
@@ -18,6 +9,7 @@ namespace :refinery do
       prep
       config/storage.yml
       config/environments/test.rb
+      config/environments/development.rb
       config/locales/en.yml
       cleanup
     ] do
@@ -42,7 +34,7 @@ namespace :refinery do
         'test' => {
           'root' => "<%= Rails.root.join('tmp/storage') %>",
           'service' => "Disk"
-        }
+        },
       }
       File.open(file.name, 'w') do |f|
         f.write config.to_yaml
@@ -51,6 +43,12 @@ namespace :refinery do
 
     desc 'Ensure that active_storage uses the test configuration from storage.yml'
     file 'config/environments/test.rb': tmpfile do |file|
+      new_line = "  config.active_storage.service = :test\n"
+      insert_before_end(file.name, new_line)
+    end
+
+    desc 'Ensure that active_storage in spec/dummy, dev mode uses the test configuration from storage.yml'
+    file 'config/environments/development.rb': tmpfile do |file|
       new_line = "  config.active_storage.service = :test\n"
       insert_before_end(file.name, new_line)
     end
@@ -99,3 +97,4 @@ namespace :refinery do
     end
   end
 end
+Rake::Task['refinery:testing:setup_extension'].clear

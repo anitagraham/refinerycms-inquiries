@@ -5,7 +5,7 @@ module Refinery
 
       def attachment_conditions_list
         tag.ul class: :tick do
-          [attachments_count, attachment_size, attachment_types]
+          [attachments_count, attachments_size, attachments_types]
             .each.reduce(ActiveSupport::SafeBuffer.new) do |buffer, message|
             buffer << tag.li(message)
           end
@@ -17,12 +17,12 @@ module Refinery
           tws('.many_attachments', quantity: Refinery::Inquiries.attachments_max_number)
       end
 
-      def attachment_size
-        tws('.attachment_max_size', quantity: Refinery::Inquiries.attachment_max_size_human)
+      def attachments_size
+        tws('.attachments_max_size', quantity: Refinery::Inquiries.attachments_max_size_human)
       end
 
-      def attachment_types
-        tws('.attachment_types', types: Refinery::Inquiries.attachments_permitted_types.join(', '))
+      def attachments_types
+        tws('.attachments_types', types: Refinery::Inquiries.attachments_permitted_types.join(', '))
       end
 
       private

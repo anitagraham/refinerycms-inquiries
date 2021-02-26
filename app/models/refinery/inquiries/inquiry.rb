@@ -40,7 +40,7 @@ module Refinery
                 content_type: Refinery::Inquiries.attachments_permitted_types,
                 size: { less_than_or_equal_to: Refinery::Inquiries.attachments_max_size,
                         message: ::I18n.t('errors.messages.size_out_of_range',
-                                          max: Refinery::Inquiries.attachment_max_size_human)
+                                          max: Refinery::Inquiries.attachments_max_size_human)
                       }
     end
   end

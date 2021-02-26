@@ -1,65 +1,86 @@
 <%
+  # get configuration settings that affect how the form is built
   recaptcha = Refinery::Inquiries.recaptcha_site_key.presence
-  attachments = Refinery::Inquiries.attachments_permitted
   show_privacy = Refinery::Inquiries.show_contact_privacy_link
+
+  # optional fields (for the site owner. Required for the user)
+  require_company = Refinery::Inquiries.show_company_field
+  require_phone = Refinery::Inquiries.show_phone_number_field
+
+  # optional feature
+  attachments = Refinery::Inquiries.attachments_permitted
+
+  # form presentation
+  i18n_scope = 'activerecord.attributes.refinery/inquiries/inquiry'
+  placeholders = Refinery::Inquiries.show_placeholders
+
 %>
 
 <% if recaptcha %>
   <% content_for :javascripts do %>
-    <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js', async: Rails.env.production?, defer: Rails.env.production? %>
+    <%= javascript_include_tag 'https://www.google.com/recaptcha/api.js',
+                               async: Rails.env.production?,
+                               defer: Rails.env.production? %>
   <% end %>
 <% end %>
 
 <%= form_for [refinery, :inquiries, inquiry] do |f| %>
-  <%= render partial:  "/refinery/admin/error_messages",
-             locals:  {
-               object:  inquiry,
-               include_object_name:  true
+  <%= render partial: "/refinery/admin/error_messages",
+             locals: {
+               object: inquiry,
+               include_object_name: true
              } %>
+
   <div class="fields" >
+
     <div class="field" >
-      <%= f.label :name, class:  'placeholder-fallback required' %>
-      <%= f.text_field :name, class:  'text', required:  'required',
-                       placeholder:  (t('name', scope:  'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
+      <%= f.label :name, class: 'placeholder-fallback required' %>
+      <%= f.text_field :name, class: 'text', required: 'required',
+                       placeholder: (t('name', scope: i18n_scope) if placeholders) %>
     </div >
 
-    <% if Refinery::Inquiries.show_company_field %>
+    <% if require_company %>
       <div class="field" >
-        <%= f.label :company, class:  'placeholder-fallback' %>
-        <%= f.text_field :company, class:  'text company',
-                         placeholder:  (t('company', scope:  'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
+        <%= f.label :company, class: 'placeholder-fallback' %>
+        <%= f.text_field :company, class: 'text company',
+                         placeholder: (t('company', scope: i18n_scope) if placeholders) %>
       </div >
     <% end %>
 
     <div class="field" >
-      <%= f.label :email, class:  'placeholder-fallback required' %>
-      <%= f.email_field :email, class:  'text email', required:  'required',
-                        placeholder:  (t('email', scope:  'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
+      <%= f.label :email, class: 'placeholder-fallback required' %>
+      <%= f.email_field :email, class: 'text email', required: 'required',
+                        placeholder: (t('email', scope: i18n_scope) if placeholders) %>
     </div >
 
-    <% if Refinery::Inquiries.show_phone_number_field %>
+    <% if require_phone %>
       <div class="field" >
-        <%= f.label :phone, class:  'placeholder-fallback' %>
-        <%= f.text_field :phone, class:  'text phone',
-                         placeholder:  (t('phone', scope:  'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
+        <%= f.label :phone, class: 'placeholder-fallback' %>
+        <%= f.text_field :phone, class: 'text phone',
+                         placeholder: (t('phone', scope: i18n_scope) if placeholders) %>
       </div >
     <% end %>
 
     <div class='field message_field' >
       <%= f.label :message, class: 'placeholder-fallback required' %>
-      <%= f.text_area :message, rows: 8, required:  'required',
-                      placeholder:  (t('message', scope:  'activerecord.attributes.refinery/inquiries/inquiry') if Refinery::Inquiries.show_placeholders) %>
+      <%= f.text_area :message, rows: 8, required: 'required',
+                      placeholder: (t('message', scope: i18n_scope) if placeholders) %>
     </div >
   </div >
 
-  <%= render('refinery/inquiries/inquiries/add_attachments', f: f) if attachments %>
+  <% if attachments %>
+    <%= render partial: 'refinery/inquiries/inquiries/add_attachments',
+               locals: { f: f,
+                         i18n_scope: i18n_scope,
+                         placeholders: placeholders
+               }
+    %>
+  <% end %>
 
   <div class="actions" >
-
     <%= tag.div class: 'g-recaptcha', data: { sitekey: recaptcha } if recaptcha %>
-
     <%= f.submit 'Send Message' %>
-
     <%= link_to t('.privacy_policy'), "/privacy-policy", id: "privacy_link" if show_privacy %>
-  </div>
+  </div >
+
 <% end %>

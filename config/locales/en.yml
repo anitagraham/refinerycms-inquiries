@@ -14,13 +14,13 @@ en:
           send: Send message
           privacy_policy: We value your privacy
         add_attachments:
-          add_attachments: Add Attachments
+          add_attachments: Upload Files
       conditions:
         html:
-          attachment_max_size: Each file must be smaller than <em>%{quantity}</em>
-          attachment_types: You may only upload files with these types <em>%{types}</em>
+          attachments_max_size: Each file must be smaller than <em>%{quantity}</em>
+          attachments_types: You may only upload files with these types <em>%{types}</em>
           many_attachments: You may upload up to <em>%{quantity}</em> attachments
-          one_attachmen: You may only upload <em>1</em> attachment
+          one_attachment: You may only upload <em>1</em> attachment
       admin:
         inquiries:
           delete: Remove this inquiry forever
@@ -102,3 +102,4 @@ en:
       content_type_invalid: "Must be one of %{authorized_types}. This document is %{content_type}"
       limit_out_of_range: "No more than %{max} documents permitted"
       size_out_of_range: "Must be smaller than %{max}"
+  attachments: "Attachments"

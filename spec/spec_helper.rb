@@ -48,6 +48,10 @@ RSpec.configure do |config|
 
   # Store last errors so we can run rspec with --only-failures
   config.example_status_persistence_file_path = ".rspec_failures"
+
+  # config.file_fixture_path = "spec/fixtures/files"
+  config.file_fixture_path = "spec/fixtures"
+
 end
 
 # Requires supporting files with custom matchers and macros, etc,

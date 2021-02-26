@@ -12,11 +12,15 @@ module Refinery
     config_accessor :from_name
     config_accessor :post_path, :page_path_new, :page_path_thank_you
     config_accessor :filter_spam, :recaptcha_site_key
+
     config_accessor :attachments_permitted
     config_accessor :attachments_permitted_types
+    config_accessor :attachments_types_human
+    config_accessor :attachments_types_js
     config_accessor :attachments_max_number
     config_accessor :attachments_max_size
-    config_accessor :attachment_max_size_human
+    config_accessor :attachments_max_size_human
+    config_accessor :attachments_external_uploader
 
     self.show_contact_privacy_link = true
     self.show_company_field = false
@@ -35,12 +39,17 @@ module Refinery
     self.attachments_max_number = 3
     # array of mime types  %w[ image/png image/jpeg application/pdf]
     self.attachments_permitted_types = %w[image/jpeg image/png]
+    self.attachments_external_uploader = false
 
-    def self.attachment_max_size_human
+    def self.attachments_max_size_human
       ActiveSupport::NumberHelper.number_to_human_size(self.attachments_max_size)
     end
 
-    def self.attachment_types_human
+    def self.attachments_types_js
+      self.attachments_permitted_types.join(' ')
+    end
+
+    def self.attachments_types_human
       self.attachments_permitted_types.to_sentence(two_words_connector: ' or ', last_word_connector: ' or ')
     end
 

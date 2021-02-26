@@ -3,10 +3,12 @@ require "spec_helper"
 module Refinery
   module Inquiries
 
-    describe "inquiries", type: :feature do
+    describe "Inquiries", type: :feature do
 
       def making_an_inquiry(name, email, message)
+
         ensure_on(refinery.inquiries_new_inquiry_path)
+
         fill_in "Name", with: name
         fill_in "Email", with: email
         fill_in "Message", with: message
@@ -26,7 +28,7 @@ module Refinery
       context "when given valid data" do
         it "is successful" do
           visit refinery.inquiries_new_inquiry_path
-          expect { making_an_inquiry("Ugis Ozols", "ugis.ozols@refinerycms.com", "Hey, I'm testing!") }.to change(Refinery::Inquiries::Inquiry, :count).by(1)
+          expect { making_an_inquiry( 'Ugis Ozols', 'ugis.ozols@refinerycms.com', "Hey, I'm testing!") }.to change(Refinery::Inquiries::Inquiry, :count).by(1)
           expect(page.current_path).to eq(refinery.thank_you_inquiries_inquiries_path)
           expect(page).to have_content("Thank You")
 
@@ -154,6 +156,99 @@ module Refinery
 
               expect(page).to have_selector("label", text: 'Company')
               expect(page).to have_selector("#inquiry_company")
+            end
+          end
+        end
+      end
+
+      describe 'Attachments:' do
+
+        let(:file_png) { file_fixture('fathead.png') }
+        let(:file_jpg) { file_fixture('beach.jpeg') }
+        let(:file_jpg2) { file_fixture('beach-alternate.jpeg') }
+
+        def inquiry_with_attachments(attachments)
+          ensure_on(refinery.inquiries_new_inquiry_path)
+
+          fill_in "Name", with: 'Ugis Ozols'
+          fill_in "Email", with: 'ugis.ozols@refinerycms.com'
+          fill_in "Message", with: 'Sending you an attachment'
+          attach_file(attachments, multiple: true, name: 'inquiry[attachments][]')
+          click_button "Send Message"
+        end
+
+        context 'when not permitted' do
+          before do
+            allow(Refinery::Inquiries.config).to receive(:attachments_permitted).and_return(false)
+          end
+
+          it 'provides no means to insert attachments' do
+            visit refinery.inquiries_new_inquiry_path
+            expect(page).to have_no_content('Uploading Documents')
+            expect(page).to have_no_selector('.attachments')
+          end
+        end
+
+        context 'when attachments are permitted' do
+          before do
+            allow(Refinery::Inquiries.config).to receive(:attachments_permitted).and_return(true)
+          end
+
+          it 'provides attachment section in the new inquiry form' do
+            visit refinery.inquiries_new_inquiry_path
+            expect(page).to have_content('Uploading Documents')
+            expect(page).to have_selector('.attachments')
+          end
+
+          describe 'limited file types' do
+            before do
+              allow(Refinery::Inquiries.config).to receive(:attachments_permitted_types).and_return(['image/png'])
+            end
+
+            it 'uploads a file with a permitted type' do
+              expect {
+                inquiry_with_attachments(file_png)
+              }.to change(ActiveStorage::Attachment, :count).by(1)
+
+              expect(Refinery::Inquiries::Inquiry.first.attachments.count).to eq(1)
+            end
+
+            it "doesn't upload file with a type that is not permitted" do
+              expect {
+                inquiry_with_attachments( file_jpg)
+              }.not_to change(ActiveStorage::Attachment, :count)
+            end
+          end
+          describe 'limit on number of files' do
+            before do
+              allow(Refinery::Inquiries.config).to receive(:attachments_permitted_types).and_return(['image/png', 'image/jpeg'])
+              allow(Refinery::Inquiries.config).to receive(:attachments_max_number).and_return(1)
+              allow(Refinery::Inquiries.config).to receive(:attachments_max_size).and_return(1.megabyte)
+            end
+
+            it 'uploads files if there are fewer (or equal) than the maximum' do
+              expect { inquiry_with_attachments( file_png) }.to change(ActiveStorage::Attachment, :count).by(1)
+            end
+
+            it 'does not upload files if there are more than the maximum' do
+              expect { inquiry_with_attachments( [file_png, file_jpg2]) }.not_to change(ActiveStorage::Attachment, :count)
+            end
+          end
+
+          describe 'limit on size of files' do
+            before do
+              allow(Refinery::Inquiries.config).to receive(:attachments_permitted_types)
+                                                     .and_return(['image/png', 'image/jpeg'])
+              allow(Refinery::Inquiries.config).to receive(:attachments_max_size).and_return(100.kilobytes)
+            end
+            it 'uploads a file if it is under the size limit' do
+              assert(file_png.size < 100.kilobytes)
+              expect { inquiry_with_attachments(file_png) }.to change(ActiveStorage::Attachment, :count).by(1)
+            end
+
+            it 'does not upload a file if it is over the size limit' do
+              assert(file_jpg.size > 100.kilobytes)
+              expect { inquiry_with_attachments(file_jpg) }.not_to change(ActiveStorage::Attachment, :count)
             end
           end
         end

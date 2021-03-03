@@ -41,7 +41,7 @@ namespace :refinery do
       end
     end
 
-    desc 'Ensure that active_storage uses the test configuration from storage.yml'
+    desc 'Ensure that active_storage uses the appropriate configuration from storage.yml'
     file 'config/environments/test.rb': tmpfile do |file|
       new_line = "  config.active_storage.service = :test\n"
       insert_before_end(file.name, new_line)
@@ -97,4 +97,4 @@ namespace :refinery do
     end
   end
 end
-Rake::Task['refinery:testing:setup_extension'].clear
+

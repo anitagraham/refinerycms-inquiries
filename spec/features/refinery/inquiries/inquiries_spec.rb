@@ -28,7 +28,7 @@ module Refinery
       context "when given valid data" do
         it "is successful" do
           visit refinery.inquiries_new_inquiry_path
-          expect { making_an_inquiry( 'Ugis Ozols', 'ugis.ozols@refinerycms.com', "Hey, I'm testing!") }.to change(Refinery::Inquiries::Inquiry, :count).by(1)
+          expect { making_an_inquiry('Ugis Ozols', 'ugis.ozols@refinerycms.com', "Hey, I'm testing!") }.to change(Refinery::Inquiries::Inquiry, :count).by(1)
           expect(page.current_path).to eq(refinery.thank_you_inquiries_inquiries_path)
           expect(page).to have_content("Thank You")
 
@@ -215,7 +215,7 @@ module Refinery
 
             it "doesn't upload file with a type that is not permitted" do
               expect {
-                inquiry_with_attachments( file_jpg)
+                inquiry_with_attachments(file_jpg)
               }.not_to change(ActiveStorage::Attachment, :count)
             end
           end
@@ -227,11 +227,11 @@ module Refinery
             end
 
             it 'uploads files if there are fewer (or equal) than the maximum' do
-              expect { inquiry_with_attachments( file_png) }.to change(ActiveStorage::Attachment, :count).by(1)
+              expect { inquiry_with_attachments(file_png) }.to change(ActiveStorage::Attachment, :count).by(1)
             end
 
             it 'does not upload files if there are more than the maximum' do
-              expect { inquiry_with_attachments( [file_png, file_jpg2]) }.not_to change(ActiveStorage::Attachment, :count)
+              expect { inquiry_with_attachments([file_png, file_jpg2]) }.not_to change(ActiveStorage::Attachment, :count)
             end
           end
 
@@ -250,6 +250,21 @@ module Refinery
               assert(file_jpg.size > 100.kilobytes)
               expect { inquiry_with_attachments(file_jpg) }.not_to change(ActiveStorage::Attachment, :count)
             end
+          end
+          describe 'when a fancy js uploader is wanted' do
+            before do
+              allow(Refinery::Inquiries.config).to receive(:attachments_external_uploader).and_return(true)
+            end
+            it 'places a trigger button on the page' do
+              visit refinery.inquiries_new_inquiry_path
+              expect(page).to have_button('upload_trigger')
+            end
+            it 'places information about attachments in the form' do
+              visit refinery.inquiries_new_inquiry_path
+              expect(page).to have_selector('div[data-direct-upload-url]')
+              expect(page).to have_selector('div[data-field-name]')
+            end
+
           end
         end
       end

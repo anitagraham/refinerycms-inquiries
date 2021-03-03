@@ -66,7 +66,7 @@ module Refinery
         http = HTTPClient.new
         response = http.get(
           GOOGLE_SITEVERIFY_URL,
-          secret: Rails.application.credentials[:recaptcha][:secret_key],
+          secret: Rails.application.credentials.dig(:recaptcha, :secret_key),
           response: @params['g-recaptcha-response']
         )
         JSON.parse(response.body)['success'] == true

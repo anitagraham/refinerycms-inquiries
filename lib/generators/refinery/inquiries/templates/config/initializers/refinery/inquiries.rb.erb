@@ -35,7 +35,8 @@ Refinery::Inquiries.configure do |config|
   # config.attachments_permitted = <%= Refinery::Inquiries.attachments_permitted.inspect %>
   # config.attachments_max_number = <%= Refinery::Inquiries.attachments_max_number.inspect %>
   # config.attachments_max_size = <%= Refinery::Inquiries.attachments_max_size.inspect %>
-  # #  array of mime types. %w[ image/png jpeg application/pdf]
-  # config.attachments_permitted_types = <%= Refinery::Inquiries.attachments_permitted_types %>
+  # array of file-types and mime-types.         %w[ image/png image/jpeg application/pdf]
+  # file-types and mime-types can be mixed      %w[ png jpeg jpg pdf image/tiff]
+  # config.attachments_permitted_types = <%= Refinery::Inquiries.attachments_permitted_types.inspect %>
 
 end

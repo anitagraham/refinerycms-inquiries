@@ -46,7 +46,7 @@ module Refinery
 
         def inquiry_saved_and_validated?
           if @inquiry.valid?
-            @filter = SpamFilter.new(@inquiry, request)
+            @filter = ::Refinery::Inquiries::SpamFilter.new(@inquiry, request)
             @filter.call
 
             @filter.valid?

@@ -33,7 +33,9 @@ module Refinery
       end
 
       def from_mail
-        "#{Refinery::Inquiries.from_name}@#{@request.domain}"
+        Rails.logger.debug @request.domain.presence
+        from_domain = @request.domain || 'caststone.com.au'
+        "#{Refinery::Inquiries.from_name}@#{from_domain}"
       end
 
       def attached_files(attached)

@@ -9,6 +9,7 @@ Refinery::Core::Engine.routes.draw do
     resources :contact, :path => '', :only => [], :as => :inquiries, :controller => 'inquiries' do
       get :thank_you, :path => Refinery::Inquiries.page_path_thank_you, :on => :collection
     end
+
   end
 
   # Admin routes

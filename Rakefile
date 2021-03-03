@@ -15,8 +15,11 @@ end
 require "refinerycms-testing"
 Refinery::Testing::Railtie.load_dummy_tasks(ENGINE_PATH)
 
+puts "Loading rspec.rake"
 load File.expand_path('../tasks/rspec.rake', __FILE__)
+puts "Loading setup_extension.rake"
+load File.expand_path('../tasks/setup_extension.rake', __FILE__)
 
 task :default => :spec
 
-load File.expand_path('../tasks/setup_extension.rake', __FILE__)
+

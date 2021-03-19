@@ -28,8 +28,8 @@ module Refinery
         end
 
         if notify?
-          send_notification_email!
-          send_confirmation_email!
+          send_notification_email!(@inquiry, @request)
+          send_confirmation_email!(@inquiry, @request)
         end
       end
 
@@ -49,10 +49,9 @@ module Refinery
 
       def recaptcha_validated?
         return true unless recaptcha?
-        # avoid doing a second request if we already have a result.
-        return @recaptcha_validated unless @recaptcha_validated.nil?
 
-        @recaptcha_validated = recaptcha_success?
+        # avoid doing a second request if we already have a result.
+        @recaptcha_validated ||= recaptcha_success?
       end
 
       private
@@ -82,16 +81,16 @@ module Refinery
         @inquiry.ham?
       end
 
-      def send_notification_email!
-        InquiryMailer.notification(@inquiry, @request).deliver_now
+      def send_notification_email!(inquiry, request)
+        InquiryMailer.notification(inquiry, request).deliver_now
       rescue StandardError
         Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$ERROR_INFO}\n"
       end
 
-      def send_confirmation_email!
+      def send_confirmation_email!(inquiry, request)
         if Refinery::Inquiries::Setting.send_confirmation?
           begin
-            InquiryMailer.confirmation(@inquiry, @request).deliver_now
+            InquiryMailer.confirmation(inquiry, request).deliver_now
           rescue StandardError
             Rails.logger.warn "There was an error delivering an inquiry confirmation:\n#{$ERROR_INFO}\n"
           end

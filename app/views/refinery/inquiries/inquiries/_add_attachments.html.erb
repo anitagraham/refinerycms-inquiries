@@ -20,7 +20,7 @@
     %>
   <% else %>
     <div class="field" >
-      <%= f.label t('.add_attachments', scope: i18n_scope), class: 'required' %>
+      <%= f.label t('.add_attachments', scope: i18n_scope) %>
       <%= f.file_field :attachments,
                        id: :attached_files,
                        multiple: true,

@@ -33,7 +33,6 @@ module Refinery
       end
 
       def from_mail
-        Rails.logger.debug @request.domain.presence
         from_domain = @request.domain || 'caststone.com.au'
         "#{Refinery::Inquiries.from_name}@#{from_domain}"
       end

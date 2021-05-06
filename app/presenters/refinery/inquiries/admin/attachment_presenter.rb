@@ -61,7 +61,6 @@ module Refinery
           end
 
           def download
-            Rails.logger.debug "Attachment URL: #{context.rails_blob_url(attachment)}"
             action_icon(:download, context.rails_blob_url(attachment, disposition: "attachment"), 'Download')
           end
 

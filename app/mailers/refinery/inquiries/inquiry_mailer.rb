@@ -33,7 +33,7 @@ module Refinery
       end
 
       def from_mail
-        from_domain = @request.domain || 'caststone.com.au'
+        from_domain = @request.domain.presence
         "#{Refinery::Inquiries.from_name}@#{from_domain}"
       end
 

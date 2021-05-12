@@ -1,3 +1,3 @@
-//= link refinery/refinery-inquirie.css
+//= link refinery/refinery-inquiries.css
 //= require refinery-inquiries.js
 //= require activestorage

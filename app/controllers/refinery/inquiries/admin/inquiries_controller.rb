@@ -5,14 +5,14 @@ module Refinery
         include Rails.application.routes.url_helpers
 
         crudify :'refinery/inquiries/inquiry',
-                :title_attribute => "name",
-                :order => "created_at DESC"
+                title_attribute: "name",
+                order: "created_at DESC"
 
         helper_method :group_by_date
 
-        before_action :find_all_ham, :only => [:index]
-        before_action :find_all_spam, :only => [:spam]
-        before_action :get_spam_count, :only => [:index, :spam]
+        before_action :find_all_ham, only: [:index]
+        before_action :find_all_spam, only: [:spam]
+        before_action :get_spam_count, only: [:index, :spam]
 
         def index
           @inquiries = @inquiries.with_query(params[:search]) if searching?
@@ -22,7 +22,7 @@ module Refinery
 
         def spam
           self.index
-          render :action => 'index'
+          render action: 'index'
         end
 
         def toggle_spam

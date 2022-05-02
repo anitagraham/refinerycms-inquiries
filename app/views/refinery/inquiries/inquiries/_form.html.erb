@@ -24,7 +24,7 @@
   <% end %>
 <% end %>
 
-<%= form_for [refinery, :inquiries, inquiry] do |f| %>
+<%= form_with model: [refinery, :inquiries, inquiry] do |f| %>
   <%= render partial: "/refinery/admin/error_messages",
              locals: {
                object: inquiry,

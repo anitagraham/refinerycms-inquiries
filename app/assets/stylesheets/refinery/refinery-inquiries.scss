@@ -1,6 +1,6 @@
 .inquiries {
   form {
-    padding-top: 12px;
+    //padding-top: 12px;
     label {
       width: 150px;
       float: left;
@@ -8,11 +8,11 @@
         content:" *"
       }
     }
-    input {
+    input[type="search"] {
       width: 200px;
     }
     .field {
-      margin: 12px 0px;
+      margin: 12px 0;
     }
     .actions {
       margin-left: 150px;
@@ -21,11 +21,17 @@
       }
     }
   }
+
+  #actions li.selected {
+    border-color: darken(#b7e3fc, 30%);
+  }
 }
 table#inquiry {
   tr.attachment td {
     position: relative;
     span.actions {position: absolute}
   }
-
 }
+
+
+

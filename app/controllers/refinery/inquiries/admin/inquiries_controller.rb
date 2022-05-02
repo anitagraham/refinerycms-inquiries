@@ -12,6 +12,7 @@ module Refinery
 
         before_action :find_all_ham, only: [:index]
         before_action :find_all_spam, only: [:spam]
+        before_action :get_ham_count, only: [:index, :spam]
         before_action :get_spam_count, only: [:index, :spam]
 
         def index
@@ -42,8 +43,12 @@ module Refinery
           @inquiries = Refinery::Inquiries::Inquiry.spam
         end
 
+        def get_ham_count
+          @ham_count = Refinery::Inquiries::Inquiry.where(spam: false).count
+        end
+
         def get_spam_count
-          @spam_count = Refinery::Inquiries::Inquiry.where(:spam => true).count
+          @spam_count = Refinery::Inquiries::Inquiry.where(spam: true).count
         end
 
         private

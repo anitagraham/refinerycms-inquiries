@@ -18,9 +18,9 @@ Gem::Specification.new do |s|
   s.add_dependency  'mobility'
   s.add_dependency  'refinerycms-settings', '~> 4.0'
   s.add_dependency  'filters_spam',         '~> 0.2'
-  s.add_dependency  'actionmailer',        ['>= 5.2']
+  s.add_dependency  'actionmailer',        ['>= 6.0.0']
   s.add_dependency  'httpclient'
-  s.add_dependency  'mini_magick'
+  s.add_dependency  'image_processing'
   s.add_dependency  'activestorage'
   s.add_dependency  'active_storage_validations'
 

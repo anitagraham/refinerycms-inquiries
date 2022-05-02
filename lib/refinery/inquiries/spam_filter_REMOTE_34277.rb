@@ -7,7 +7,6 @@ require 'English'
 module Refinery
   module Inquiries
     class SpamFilter
-
       def initialize(inquiry, request)
         @inquiry = inquiry
         @request = request
@@ -28,8 +27,8 @@ module Refinery
         end
 
         if notify?
-          send_notification_email!(@inquiry, @request)
-          send_confirmation_email!(@inquiry, @request)
+          send_notification_email!
+          send_confirmation_email!
         end
       end
 
@@ -49,15 +48,16 @@ module Refinery
 
       def recaptcha_validated?
         return true unless recaptcha?
-
         # avoid doing a second request if we already have a result.
-        @recaptcha_validated ||= recaptcha_success?
+        return @recaptcha_validated unless @recaptcha_validated.nil?
+
+        @recaptcha_validated = recaptcha_success?
       end
 
       private
 
       def recaptcha?
-        Inquiries.recaptcha_site_key.present?
+        Inquiries.recaptcha_site_key.present? 
       end
 
       GOOGLE_SITEVERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
@@ -65,7 +65,7 @@ module Refinery
         http = HTTPClient.new
         response = http.get(
           GOOGLE_SITEVERIFY_URL,
-          secret: Rails.application.credentials.dig(:recaptcha, :secret_key),
+          secret: Rails.application.credentials[:recaptcha][:secret_key],
           response: @params['g-recaptcha-response']
         )
         JSON.parse(response.body)['success'] == true
@@ -89,8 +89,8 @@ module Refinery
         end
       end
 
-      def send_confirmation_email!(inquiry, request)
-        if Refinery::Inquiries::Setting.send_confirmation?
+      def send_confirmation_email!
+        if Setting.send_confirmation?
           begin
             InquiryMailer.confirmation(@inquiry, @request).deliver_now
           rescue StandardError

@@ -81,18 +81,16 @@ module Refinery
         @inquiry.ham?
       end
 
-      def send_notification_email!
-        begin
-          InquiryMailer.notification(@inquiry, @request).deliver_now
-        rescue
-          Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$ERROR_INFO}"
-        end
+      def send_notification_email!(inquiry, request)
+        InquiryMailer.notification(inquiry, request).deliver_now
+      rescue StandardError
+        Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$ERROR_INFO}\n"
       end
 
       def send_confirmation_email!(inquiry, request)
         if Refinery::Inquiries::Setting.send_confirmation?
           begin
-            InquiryMailer.confirmation(@inquiry, @request).deliver_now
+            InquiryMailer.confirmation(inquiry, request).deliver_now
           rescue StandardError
             Rails.logger.warn "There was an error delivering an inquiry confirmation:\n#{$ERROR_INFO}\n"
           end

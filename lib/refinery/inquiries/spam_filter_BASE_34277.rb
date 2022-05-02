@@ -1,13 +1,9 @@
-# frozen_string_literal: true
-
 require 'httpclient'
 require 'uri'
-require 'English'
 
 module Refinery
   module Inquiries
     class SpamFilter
-
       def initialize(inquiry, request)
         @inquiry = inquiry
         @request = request
@@ -20,7 +16,7 @@ module Refinery
             @valid = true
             @inquiry.save
           else
-            @inquiry.errors.add(:base, ::I18n.t(:captcha_invalid, scope: 'refinery.inquiries.spam_filter'))
+            @inquiry.errors.add(:base, ::I18n.t(:captcha_invalid, scope: "refinery.inquiries.spam_filter"))
           end
         elsif simple_filter?
           @inquiry.save
@@ -28,8 +24,8 @@ module Refinery
         end
 
         if notify?
-          send_notification_email!(@inquiry, @request)
-          send_confirmation_email!(@inquiry, @request)
+          send_notification_email!
+          send_confirmation_email!
         end
       end
 
@@ -49,9 +45,10 @@ module Refinery
 
       def recaptcha_validated?
         return true unless recaptcha?
-
         # avoid doing a second request if we already have a result.
-        @recaptcha_validated ||= recaptcha_success?
+        return @recaptcha_validated unless @recaptcha_validated.nil?
+
+        @recaptcha_validated = recaptcha_success?
       end
 
       private
@@ -60,15 +57,15 @@ module Refinery
         Inquiries.recaptcha_site_key.present?
       end
 
-      GOOGLE_SITEVERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
+      GOOGLE_SITEVERIFY_URL = "https://www.google.com/recaptcha/api/siteverify".freeze
       def recaptcha_success?
         http = HTTPClient.new
         response = http.get(
           GOOGLE_SITEVERIFY_URL,
-          secret: Rails.application.credentials.dig(:recaptcha, :secret_key),
-          response: @params['g-recaptcha-response']
+          secret: Rails.application.secrets.recaptcha_secret_key,
+          response: @params["g-recaptcha-response"]
         )
-        JSON.parse(response.body)['success'] == true
+        JSON.parse(response.body)["success"] == true
       end
 
       def simple_filter?
@@ -85,16 +82,16 @@ module Refinery
         begin
           InquiryMailer.notification(@inquiry, @request).deliver_now
         rescue
-          Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$ERROR_INFO}"
+          Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$!}\n"
         end
       end
 
-      def send_confirmation_email!(inquiry, request)
-        if Refinery::Inquiries::Setting.send_confirmation?
+      def send_confirmation_email!
+        if Setting.send_confirmation?
           begin
             InquiryMailer.confirmation(@inquiry, @request).deliver_now
-          rescue StandardError
-            Rails.logger.warn "There was an error delivering an inquiry confirmation:\n#{$ERROR_INFO}\n"
+          rescue
+            Rails.logger.warn "There was an error delivering an inquiry confirmation:\n#{$!}\n"
           end
         end
       end

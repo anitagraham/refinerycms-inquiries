@@ -57,7 +57,7 @@ module Refinery
       private
 
       def recaptcha?
-        Inquiries.recaptcha_site_key.present?
+        Inquiries.recaptcha_site_key.present? 
       end
 
       GOOGLE_SITEVERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
@@ -65,7 +65,11 @@ module Refinery
         http = HTTPClient.new
         response = http.get(
           GOOGLE_SITEVERIFY_URL,
+<<<<<<< HEAD
           secret: Rails.application.credentials.dig(:recaptcha, :secret_key),
+=======
+          secret: Rails.application.credentials[:recaptcha][:secret_key],
+>>>>>>> rails-upgrade
           response: @params['g-recaptcha-response']
         )
         JSON.parse(response.body)['success'] == true
@@ -81,18 +85,29 @@ module Refinery
         @inquiry.ham?
       end
 
+<<<<<<< HEAD
+      def send_notification_email!(inquiry, request)
+        InquiryMailer.notification(inquiry, request).deliver_now
+      rescue StandardError
+        Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$ERROR_INFO}\n"
+=======
       def send_notification_email!
         begin
           InquiryMailer.notification(@inquiry, @request).deliver_now
         rescue
           Rails.logger.warn "There was an error delivering an inquiry notification.\n#{$ERROR_INFO}"
         end
+>>>>>>> rails-upgrade
       end
 
       def send_confirmation_email!(inquiry, request)
         if Refinery::Inquiries::Setting.send_confirmation?
           begin
+<<<<<<< HEAD
+            InquiryMailer.confirmation(inquiry, request).deliver_now
+=======
             InquiryMailer.confirmation(@inquiry, @request).deliver_now
+>>>>>>> rails-upgrade
           rescue StandardError
             Rails.logger.warn "There was an error delivering an inquiry confirmation:\n#{$ERROR_INFO}\n"
           end

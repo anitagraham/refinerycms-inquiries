@@ -1,4 +1,4 @@
-.inquiries {
+#actions.inquiries {
   form {
     //padding-top: 12px;
     label {
@@ -22,8 +22,9 @@
     }
   }
 
-  #actions li.selected {
+  li.selected {
     border-color: darken(#b7e3fc, 30%);
+
   }
 }
 table#inquiry {

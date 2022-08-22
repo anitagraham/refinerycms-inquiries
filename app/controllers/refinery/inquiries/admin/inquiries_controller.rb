@@ -33,6 +33,12 @@ module Refinery
           redirect_back fallback_location: root_path
         end
 
+        def delete_all_spam
+          spam_inquiries = Refinery::Inquiries::Inquiry.spam
+          spam_inquiries.delete_all
+          redirect_to refinery.inquiries_admin_inquiries_path
+        end
+
         protected
 
         def find_all_ham

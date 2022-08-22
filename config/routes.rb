@@ -16,8 +16,13 @@ Refinery::Core::Engine.routes.draw do
   namespace :inquiries, :path => '' do
     namespace :admin, :path => Refinery::Core.backend_route do
       resources :inquiries, :only => [:index, :show, :destroy] do
-        get :spam, :on => :collection
-        get :toggle_spam, :on => :member
+        collection do
+          get :spam
+          delete :delete_spam
+        end
+        member do
+          get :toggle_spam
+        end
       end
 
       scope :path => 'inquiries' do
@@ -26,3 +31,4 @@ Refinery::Core::Engine.routes.draw do
     end
   end
 end
+

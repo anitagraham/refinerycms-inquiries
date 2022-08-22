@@ -18,6 +18,13 @@
       link_text = "#{t('.spam')} (#{count})"
       link_href = refinery.spam_inquiries_admin_inquiries_path
       link_icon = count.zero? ? :spam_empty_icon : :spam_icon
+      delete_spam_button = link_to('Delete all spam',
+                                   refinery.delete_spam_inquiries_admin_inquiries_path,
+                                   method: :delete,
+                                   remote: true,
+                                   class: :delete_icon,
+                                   data: { confirm: 'Are you sure?' })
+
     %>
     <%= tag.li class: classes do
       link_to link_text, link_href, class: link_icon

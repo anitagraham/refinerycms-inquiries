@@ -28,8 +28,8 @@ module Refinery
         end
 
         if notify?
-          send_notification_email!
-          send_confirmation_email!
+          send_notification_email!(@inquiry, @request)
+          send_confirmation_email!(@inquiry, @request)
         end
       end
 
@@ -89,7 +89,7 @@ module Refinery
         end
       end
 
-      def send_confirmation_email!
+      def send_confirmation_email!(inquiry, request)
         if Refinery::Inquiries::Setting.send_confirmation?
           begin
             InquiryMailer.confirmation(@inquiry, @request).deliver_now

@@ -25,7 +25,22 @@ module Refinery
         tws('.attachments_types', types: Refinery::Inquiries.attachments_permitted_types.join(', '))
       end
 
+      def inquiries_summary(view_path, count: 0, delete_path: nil, **options)
+        link_text = "#{options[:label]} (#{count})"
+        link_icon = [options[:icon_name], count.zero? ? 'empty' : nil, 'icon'].compact.join('_').to_sym
+        delete_all = delete_button(options, delete_path, count)
+        [link_to(link_text, view_path, class: link_icon), delete_all].compact.join(' ').html_safe
+      end
+
       private
+
+        def delete_button(options, path, count)
+          return nil unless (options[:show_delete] && path && count > 0)
+
+          label = "Delete all #{options[:label].pluralize}"
+          link_to(label, path, method: :delete, remote: true, class: [:delete_icon, :button],
+                  data: { confirm: 'Are you sure?' })
+        end
 
         def translate_with_scope(key, options = {})
           default_scope = 'refinery.inquiries.conditions.html'
@@ -36,4 +51,3 @@ module Refinery
     end
   end
 end
-

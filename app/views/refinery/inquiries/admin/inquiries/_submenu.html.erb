@@ -1,48 +1,32 @@
-<div id='actions' class="inquiries" >
-  <ul >
-    <li ><%= render "/refinery/admin/search", url: request.path.gsub("//", "/") %></li >
-    <%
-      classes = params[:action] == 'index' ? 'selected' : nil
-      count = @ham_count
-      link_text = "#{t('.inbox')} (#{count})"
-      link_href = refinery.inquiries_admin_inquiries_path
-      link_icon = count.zero? ? :email_empty_icon : :email_icon
-    %>
-    <%= tag.li class: classes do
-      link_to link_text, link_href, class: link_icon
-    end
-    %>
-    <%
-      classes = params[:action] == 'spam' ? 'selected' : nil
-      count = @spam_count
-      link_text = "#{t('.spam')} (#{count})"
-      link_href = refinery.spam_inquiries_admin_inquiries_path
-      link_icon = count.zero? ? :spam_empty_icon : :spam_icon
-      delete_spam_button = link_to('Delete all spam',
-                                   refinery.delete_spam_inquiries_admin_inquiries_path,
-                                   method: :delete,
-                                   remote: true,
-                                   class: :delete_icon,
-                                   data: { confirm: 'Are you sure?' })
+<div id='actions' class="inquiries">
+  <ul>
+    <li>
+      <%= render "/refinery/admin/search", url: request.path.gsub("//", "/") %>
+    </li>
 
+    <li>
+    <%=
+      options = {label: t('.inbox'), icon_name: 'email', show_delete: false }
+      inquiries_summary(refinery.inquiries_admin_inquiries_path, count: @ham_count, **options)
     %>
-    <%= tag.li class: classes do
-      link_to link_text, link_href, class: link_icon
-    end
+    </li>
+    <li>
+    <%=
+      options = {label: t('.spam'), icon_name: 'spam', show_delete: true }
+      inquiries_summary(refinery.spam_inquiries_admin_inquiries_path, count: @spam_count, **options)
     %>
-
-
-    <li >
+    </li>
+    <li>
       <%= link_to t('.update_notified'),
                   refinery.edit_inquiries_admin_setting_path(:inquiry_notification_recipients, dialog: true, height: 300),
                   class: "user_comment_icon",
                   id: "update_notified" %>
-    </li >
-    <li >
+    </li>
+    <li>
       <%= link_to t('.edit_confirmation_email'),
                   refinery.edit_inquiries_admin_setting_path(:inquiry_confirmation_body, dialog: true),
                   class: "edit_email_icon",
                   id: "edit_confirmation_email" %>
-    </li >
-  </ul >
-</div >
+    </li>
+  </ul>
+</div>

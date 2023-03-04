@@ -1,34 +1,24 @@
-<li class='clearfix record <%= cycle("on", "on-hover") %>' >
-  <span class='title' >
-    <%= link_to inquiry.name, refinery.inquiries_admin_inquiry_path(inquiry) %> <%= t('.said') %>
-    <span class="preview" ><%= truncate(strip_tags(sanitize(inquiry.message)), length:60) -%></span >
-    <% if inquiry.attachments.attached? %>
-      <span class="attachments" >📎</span >
-     <% end %>
-  </span >
-  <span class='actions' >
+<li class='clearfix record <%= cycle("on", "on-hover") %>'>
+
+  <%= link_to refinery.inquiries_admin_inquiry_path(inquiry) do %>
+    <span class="title"<%= "#{inquiry.name} t('.said')" %></li>
+    <span class="preview"><%= truncate(strip_tags(sanitize(inquiry.message)), length: 60) -%></span>
+    <%= tag.span t('.attachment_symbol') if inquiry.attachments.attached? %>
+  <% end %>
+
+  <span class='actions'>
     <%= action_icon :delete,
                     refinery.inquiries_admin_inquiry_path(inquiry),
                     t('refinery.inquiries.admin.inquiries.delete'),
-                    class:"cancel confirm-delete",
-                    data:{
-                      confirm:t('refinery.admin.delete.message', title:inquiry.name)
-                    },
+                    class: "cancel confirm-delete",
+                    data: { confirm: t('refinery.admin.delete.message', title: inquiry.name) },
                     method: :delete -%>
 
     <%= action_icon :show,
                     refinery.inquiries_admin_inquiry_path(inquiry),
                     t('.read_inquiry'),
                     class: 'preview_icon' -%>
-
-    <% if inquiry.spam? %>
-      <%= action_icon :email,
-                      refinery.toggle_spam_inquiries_admin_inquiry_path(inquiry),
-                      t('.mark_as_spam') -%>
-    <% else %>
-      <%= action_icon :spam,
-                      refinery.toggle_spam_inquiries_admin_inquiry_path(inquiry),
-                      t('.mark_as_ham') -%>
-    <% end %>
-  </span >
-</li >
+    <% toggle_spam_message = inquiry.spam? ? t('.mark_as_ham') : t('.mark_as_spam')  %>
+    <%= action_icon :email, refinery.toggle_spam_inquiries_admin_inquiry_path(inquiry), toggle_spam_message -%>
+  </span>
+</li>

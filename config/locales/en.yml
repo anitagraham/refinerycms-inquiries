@@ -27,6 +27,7 @@ en:
           inquiry:
             read_inquiry: Read the inquiry
             said: said
+            attachment_symbol: "\\U01F4CE"
             mark_as_spam: Mark as spam
             mark_as_ham: Move to inbox
           submenu:

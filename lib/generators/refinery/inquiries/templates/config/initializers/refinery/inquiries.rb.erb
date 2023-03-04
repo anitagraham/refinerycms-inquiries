@@ -35,8 +35,9 @@ Refinery::Inquiries.configure do |config|
   # config.attachments_permitted = <%= Refinery::Inquiries.attachments_permitted.inspect %>
   # config.attachments_max_number = <%= Refinery::Inquiries.attachments_max_number.inspect %>
   # config.attachments_max_size = <%= Refinery::Inquiries.attachments_max_size.inspect %>
+  # prefix allows you to store attachments in a folder in a bucket (amazon, anyway)
+  # config.attachments_service = <%= Refinery::Inquiries.active_storage_service.inspect %>
   # array of file-types and mime-types.         %w[ image/png image/jpeg application/pdf]
   # file-types and mime-types can be mixed      %w[ png jpeg jpg pdf image/tiff]
   # config.attachments_permitted_types = <%= Refinery::Inquiries.attachments_permitted_types.inspect %>
-
 end

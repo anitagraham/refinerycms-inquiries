@@ -15,6 +15,8 @@ module Refinery
 
     config_accessor :attachments_permitted
     config_accessor :attachments_permitted_types
+    config_accessor :active_storage_service
+    config_accessor :active_storage_prefix
     config_accessor :attachments_types_human
     config_accessor :attachments_types_js
     config_accessor :attachments_max_number
@@ -39,6 +41,8 @@ module Refinery
     self.attachments_max_number = 3
     # array of mime types  %w[ image/png image/jpeg application/pdf]
     self.attachments_permitted_types = %w[image/jpeg image/png]
+    self.active_storage_service = nil
+    self.active_storage_prefix = nil
     self.attachments_external_uploader = false
 
     def self.attachments_max_size_human

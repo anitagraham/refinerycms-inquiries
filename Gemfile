@@ -47,7 +47,6 @@ group :assets do
   gem "coffee-rails"
   gem "uglifier"
 end
-gem 'refinerycms-settings', git: 'https://github.com/anitagraham/refinerycms-settings', branch: 'master'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)

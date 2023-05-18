@@ -13,17 +13,17 @@
     <li>
       <%= link_to t('.back_to_all_inquiries'),
                   refinery.inquiries_admin_inquiries_path,
-                  :class => "back_icon" %>
+                  class:"back_icon" %>
     </li>
     <li>
       <%= link_to t('refinery.inquiries.admin.inquiries.delete'),
                   refinery.inquiries_admin_inquiry_path(@inquiry),
-                  :class => 'delete_icon no-tooltip confirm-delete',
-                  :title => t('refinery.inquiries.admin.inquiries.delete'),
-                  :data => {
-                    :confirm => t('refinery.admin.delete.message', :title => @inquiry.name)
+                  class:'delete_icon no-tooltip confirm-delete',
+                  title:t('refinery.inquiries.admin.inquiries.delete'),
+                  data:{
+                    confirm:t('refinery.admin.delete.message', title:@inquiry.name)
                   },
-                  :method => :delete %>
+                  method: :delete %>
     </li>
   </ul>
 </div>
@@ -43,7 +43,7 @@
         <strong><%= t('.from') %></strong>
       </td>
       <td>
-        <%= @inquiry.name %> [<%= mail_to @inquiry.email, @inquiry.email, {:title => t('.click_to_email')} %>]
+        <%= @inquiry.name %> [<%= mail_to @inquiry.email, @inquiry.email, {title:t('.click_to_email')} %>]
       </td>
     </tr>
     <% if @inquiry.company.present? %>
@@ -71,7 +71,7 @@
         <strong><%= t('.date') %></strong>
       </td>
       <td>
-        <%= l(Date.parse(@inquiry.created_at.to_s), :format => :long) %>
+        <%= l(Date.parse(@inquiry.created_at.to_s), format: :long) %>
       </td>
     </tr>
     <tr>
@@ -79,7 +79,7 @@
         <strong><%= t('.message') %></strong>
       </td>
       <td>
-        <%= simple_format strip_tags(@inquiry.message), :style => 'margin-top: 0' %>
+        <%= simple_format strip_tags(@inquiry.message), style:'margin-top: 0' %>
       </td>
     </tr>
     <% if @inquiry.attachments.attached? %>

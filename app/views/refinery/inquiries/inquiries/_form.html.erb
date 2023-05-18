@@ -8,11 +8,14 @@
   require_phone = Refinery::Inquiries.show_phone_number_field
 
   # optional feature
-  attachments = Refinery::Inquiries.attachments_permitted
+  attachments = Refinery::Inquiries::attachments_permitted
 
   # form presentation
   i18n_scope = 'activerecord.attributes.refinery/inquiries/inquiry'
   placeholders = Refinery::Inquiries.show_placeholders
+
+  # to handle local or remote submission
+  local = local_assigns[:remote] || false
 
 %>
 
@@ -24,7 +27,7 @@
   <% end %>
 <% end %>
 
-<%= form_with model: [refinery, :inquiries, inquiry], multipart: attachments do |f| %>
+<%= form_with model: [refinery, :inquiries, inquiry], multipart: attachments, local: local do |f| %>
   <%= render partial: "/refinery/admin/error_messages",
              locals: {
                object: inquiry,
@@ -69,7 +72,7 @@
   </div >
 
   <% if attachments %>
-    <%= render partial: 'refinery/inquiries/inquiries/add_attachments',
+    <%= render partial: 'refinery/attachments',
                locals: { f: f,
                          i18n_scope: i18n_scope,
                          placeholders: placeholders

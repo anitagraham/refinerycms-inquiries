@@ -1,32 +1,30 @@
 Refinery::Core::Engine.routes.draw do
   # Frontend routes
-  namespace :inquiries, :path => '' do
-    get Refinery::Inquiries.page_path_new, :to => 'inquiries#new', :as => 'new_inquiry'
+  namespace :inquiries, path: '' do
+    get Refinery::Inquiries.page_path_new, to: 'inquiries#new', as: 'new_inquiry'
 
-    resources :contact, :path => Refinery::Inquiries.post_path, :only => [:create],
-              :as => :inquiries, :controller => 'inquiries'
+    resources :contact, path: Refinery::Inquiries.post_path, only: [:create],
+              as: :inquiries, controller: 'inquiries'
 
-    resources :contact, :path => '', :only => [], :as => :inquiries, :controller => 'inquiries' do
-      get :thank_you, :path => Refinery::Inquiries.page_path_thank_you, :on => :collection
+    resources :contact, path: '', only: [], as: :inquiries, controller: 'inquiries' do
+      get :thank_you, path: Refinery::Inquiries.page_path_thank_you, on: :collection
     end
 
   end
 
   # Admin routes
-  namespace :inquiries, :path => '' do
-    namespace :admin, :path => Refinery::Core.backend_route do
-      resources :inquiries, :only => [:index, :show, :destroy] do
+  namespace :inquiries, path: '' do
+    namespace :admin, path: Refinery::Core.backend_route do
+      resources :inquiries, only: [:index, :show, :destroy] do
+        get :toggle_spam, on: :member
         collection do
           get :spam
           delete :delete_spam
         end
-        member do
-          get :toggle_spam
-        end
       end
 
-      scope :path => 'inquiries' do
-        resources :settings, :only => [:edit, :update]
+      scope path: 'inquiries' do
+        resources :settings, only:  [:edit, :update]
       end
     end
   end

@@ -13,14 +13,13 @@ en:
         form:
           send: Send message
           privacy_policy: We value your privacy
-        add_attachments:
-          add_attachments: Upload Files
-      conditions:
-        html:
-          attachments_max_size: Each file must be smaller than <em>%{quantity}</em>
-          attachments_types: You may only upload files with these types <em>%{types}</em>
-          many_attachments: You may upload up to <em>%{quantity}</em> attachments
-          one_attachment: You may only upload <em>1</em> attachment
+        attachments:
+          upload: Upload Documents
+          conditions:
+            max_size: Each file must be smaller than <em>%{quantity}</em>
+            types: You may only upload files with these types <em>%{types}</em>
+            many_attachments: You may upload up to <em>%{quantity}</em> attachments
+            one_attachment: You may only upload <em>1</em> attachment
       admin:
         inquiries:
           delete: Remove this inquiry forever
@@ -98,6 +97,7 @@ en:
         message: Message
         documents: Documents
         click_to_email: Click to send email
+        add_attachments: Upload attachments
   errors:
     messages:
       content_type_invalid: "Must be one of %{authorized_types}. This document is %{content_type}"

@@ -1,26 +1,27 @@
 <%
-  external_uploader = Refinery::Inquiries.attachments_external_uploader
+  external_uploader = Refinery::Inquiries::Attachments.external_uploader
 %>
 
 <div class='attachments' >
+    <h3 id='upload_trigger' class="upload_header button">
+      <%= t('.upload') %>
+    </h3 >
   <div class="conditions" >
-    <h5 >Uploading Documents</h5 >
-    <%= attachment_conditions_list %>
+    <%= attachment_conditions %>
   </div >
 
   <% if external_uploader %>
-    <button id='upload_trigger' class="button" ><%= t('.add_attachments') %></button >
     <%= tag.div id: 'jsUploader', data: {
       direct_upload_url: Rails.application.routes.url_helpers.rails_direct_uploads_path,
       field_name: 'inquiry[attachments][]',
-      max_file_number: Refinery::Inquiries.attachments_max_number,
-      max_file_size: Refinery::Inquiries.attachments_max_size,
-      permitted_file_types: Refinery::Inquiries.attachments_types_js
+      max_file_number: Refinery::Inquiries::Attachments.max_count,
+      max_file_size: Refinery::Inquiries::Attachments.max_size,
+      permitted_file_types: Refinery::Inquiries::Attachments.permitted_types.join(' ')
     }
     %>
   <% else %>
     <div class="field" >
-      <%= f.label t('.add_attachments', scope: i18n_scope) %>
+      <%= f.label t('upload', scope: 'refinery.inquiries.attachments' ) %>
       <%= f.file_field :attachments,
                        id: :attached_files,
                        multiple: true,

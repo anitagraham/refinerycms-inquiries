@@ -7,6 +7,7 @@ module Refinery
   module Inquiries
     require 'refinery/inquiries/engine'
     require 'refinery/inquiries/configuration'
+    require 'refinery/inquiries/attachments'
 
     autoload :Version, 'refinery/inquiries/version'
 

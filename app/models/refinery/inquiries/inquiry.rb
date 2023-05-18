@@ -5,13 +5,12 @@ require 'filters_spam'
 module Refinery
   module Inquiries
     class Inquiry < Refinery::Core::BaseModel
-      include ActionView::Helpers::NumberHelper
 
       if Inquiries.filter_spam
-        filters_spam message_field:    :message,
-                     email_field:      :email,
-                     author_field:     :name,
-                     other_fields:     [:phone, :company],
+        filters_spam message_field: :message,
+                     email_field: :email,
+                     author_field: :name,
+                     other_fields: [:phone, :company],
                      extra_spam_words: %w()
       end
 
@@ -30,18 +29,24 @@ module Refinery
         include_spam ? limit(number) : ham.limit(number)
       end
 
-      has_many_attached :attachments, dependent: :purge_later
+      if Inquiries.attachments_permitted
+        # has_many_attached :attachments, dependent: :purge_later, service: active_storage_service
+        has_many_attached :attachments, dependent: :purge_later
 
-      validates :attachments,
-                limit: { min: 0,
-                         max: Refinery::Inquiries.attachments_max_number,
-                         message: ::I18n.t('errors.messages.limit_out_of_range', max: Refinery::Inquiries.attachments_max_number)
-                      },
-                content_type: Refinery::Inquiries.attachments_permitted_types,
-                size: { less_than_or_equal_to: Refinery::Inquiries.attachments_max_size,
-                        message: ::I18n.t('errors.messages.size_out_of_range',
-                                          max: Refinery::Inquiries.attachments_max_size_human)
-                      }
+        validates :attachments,
+                  limit: { min: 0,
+                           max: Inquiries::Attachments.max_count,
+                           message: ::I18n.t('errors.messages.limit_out_of_range', max: Inquiries::Attachments.max_count)
+                  },
+                  content_type: Inquiries::Attachments.permitted_types,
+                  size: { less_than_or_equal_to: Inquiries::Attachments.max_size,
+                          message: ::I18n.t('errors.messages.size_out_of_range', max:  Inquiries::Attachments.max_size)
+                  }
+        # def active_storage_service
+        #   Refinery::Inquiries.active_storage_service || Application.active_storage_service
+        # end
+
+      end
     end
   end
 end
